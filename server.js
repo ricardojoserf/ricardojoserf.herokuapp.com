@@ -14,7 +14,9 @@ app.configure(function() {
 app.get("/exec/cmd", function (req, res) {  
     
     var code = req.query['code'];
+    
     var command = code;
+    
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
             res.header("Content-Type", "application/json");
@@ -25,13 +27,16 @@ app.get("/exec/cmd", function (req, res) {
 			res.end(stderr);
 		}
     });
+
 });
 
 
 app.get("/exec/instid", function (req, res) {  
     
     var code = req.query['code'];
+    
     var command = "python projects/instid/main.py " + code;
+    
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
             res.header("Content-Type", "application/json");
@@ -44,6 +49,75 @@ app.get("/exec/instid", function (req, res) {
     });
 
 });
+
+
+app.get("/exec/instafollow", function (req, res) {  
+    
+    var username = req.query['username'];
+    var password = req.query['password'];
+    var tag = req.query['tag'];
+
+    var command = "python projects/bot/main.py -u " + username + " -p " + password + " -o superFollow -t " + tag;
+    
+    exec(command, function (error, stdout, stderr) {
+        if (error === null) {
+            res.header("Content-Type", "application/json");
+            res.end(stdout);
+        }
+        else{
+            res.header("Content-Type", "application/json");
+            res.end("Error obteniendo el ID");
+        }
+    });
+
+});
+
+
+app.get("/exec/instaunfollow", function (req, res) {  
+    
+    var username = req.query['username'];
+    var password = req.query['password'];
+
+    var command = "python projects/bot/main.py -u " + username + " -p " + password + " -o superUnfollow";
+    
+    exec(command, function (error, stdout, stderr) {
+        if (error === null) {
+            res.header("Content-Type", "application/json");
+            res.end(stdout);
+        }
+        else{
+            res.header("Content-Type", "application/json");
+            res.end("Error obteniendo el ID");
+        }
+    });
+
+});
+
+
+app.get("/exec/instoken", function (req, res) {  
+    
+    var client_id = req.query['client_id'];
+    var client_secret = req.query['client_secret'];
+    var redirect_uri = req.query['redirect_uri'];
+    var code_ = req.query['code_'];
+    
+
+    var command = "python projects/instoken/main.py -i " + client_id + " -s " + client_secret + " -r " + redirect_uri + " -c " + code_ ;
+    
+    exec(command, function (error, stdout, stderr) {
+        if (error === null) {
+            res.header("Content-Type", "application/json");
+            res.end(stdout);
+        }
+        else{
+            res.header("Content-Type", "application/json");
+            res.end("Error obteniendo el ID");
+        }
+    });
+
+});
+
+
 
 
 app.get('/cmd', function(req, res) {  
@@ -62,12 +136,12 @@ app.get('/instoken', function(req, res) {
 
 
 app.get('/instafollow', function(req, res) {  
-    res.sendfile('./public/html/instoken.html');
+    res.sendfile('./public/html/instafollow.html');
 });
 
 
 app.get('/instaunfollow', function(req, res) {  
-    res.sendfile('./public/html/instoken.html');
+    res.sendfile('./public/html/instaunfollow.html');
 });
 
 

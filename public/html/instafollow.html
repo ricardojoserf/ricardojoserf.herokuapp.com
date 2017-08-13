@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularInstagram">
+<html ng-app="angularInstagramFollow">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini" ng-controller="instidController">
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="instafollowController">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -156,18 +156,24 @@
 
     <div class="container"> 
         <div class="text-center titulo">
-            <h1>Get you Instagram ID!</h1>
+            <h1>Follow 30 people in Instagram using a tag!</h1>
         </div>
         <br><br><br>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control input-lg text-center console" placeholder="Insert your username" ng-model="code_">
+                        <input type="text" class="form-control input-lg text-center" placeholder="Insert your username" ng-model="username">
                     </div>
-                    <button class="btn btn-primary btn-lg" ng-click="submit()">Get my id</button>
+                    <div class="form-group">
+                        <input type="password" class="form-control input-lg text-center" placeholder="Insert your password" ng-model="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg text-center" placeholder="Insert a tag without #" ng-model="tag">
+                    </div>
+                    <button class="btn btn-primary btn-lg" ng-click="submit()">Follow!</button>
                     <br><br>
-                    <textarea rows="10" class="text-center form-control input-lg console"  placeholder="Your ID" ng-model="result"></textarea>
+                    <textarea rows="1" class="text-center form-control input-lg"  placeholder="Result" ng-model="result"></textarea>
                 </form>
             </div>
         </div>
@@ -175,7 +181,7 @@
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> 
-    <script src="../controllers/instid.js"></script>
+    <script src="../controllers/instafollow.js"></script>
 
     <!-- CODIGO  -->
 
