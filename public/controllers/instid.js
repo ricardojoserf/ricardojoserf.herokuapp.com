@@ -2,7 +2,7 @@ angular.module('angularInstagram', []);
 
 function instidController($scope, $http) {  
 
-    $scope.code_ = "ricardojoserf";
+    // $scope.code_ = "ricardojoserf";
         
     $scope.submit = function(){
         

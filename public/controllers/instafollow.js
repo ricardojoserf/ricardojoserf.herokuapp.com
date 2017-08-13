@@ -2,8 +2,8 @@ angular.module('angularInstagramFollow', []);
 
 function instafollowController($scope, $http) {  
 
-    $scope.username = "rjruizfdez";
-    $scope.result = "not done";
+    // $scope.username = "rjruizfdez";
+    // $scope.result = "not done";
         
     $scope.submit = function(){
         

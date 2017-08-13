@@ -2,8 +2,8 @@ angular.module('angularInstagramUnfollow', []);
 
 function instaunfollowController($scope, $http) {  
 
-    $scope.username = "rjruizfdez";
-    $scope.result = "not done";
+    // $scope.username = "rjruizfdez";
+    // $scope.result = "not done";
         
     $scope.submit = function(){
         
