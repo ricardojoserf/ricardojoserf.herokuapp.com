@@ -10,7 +10,8 @@ app.configure(function() {
     app.use(express.methodOverride());                  
 });
 
-app.get("/cmd", function (req, res) {  
+
+app.get("/exec/cmd", function (req, res) {  
     
     var code = req.query['code'];
     var command = code;
@@ -24,10 +25,10 @@ app.get("/cmd", function (req, res) {
 			res.end(stderr);
 		}
     });
-
 });
 
-app.get("/instid", function (req, res) {  
+
+app.get("/exec/instid", function (req, res) {  
     
     var code = req.query['code'];
     var command = "python projects/instid/main.py " + code;
@@ -44,21 +45,37 @@ app.get("/instid", function (req, res) {
 
 });
 
-app.get('/page1', function(req, res) {  
-    res.sendfile('./public/index.html');
+
+app.get('/cmd', function(req, res) {  
+    res.sendfile('./public/html/cmd.html');
 });
 
 
-app.get('/page2', function(req, res) {  
-    res.sendfile('./public/instid.html');
+app.get('/instid', function(req, res) {  
+    res.sendfile('./public/html/instid.html');
+});
+
+
+app.get('/instoken', function(req, res) {  
+    res.sendfile('./public/html/instoken.html');
+});
+
+
+app.get('/instafollow', function(req, res) {  
+    res.sendfile('./public/html/instoken.html');
+});
+
+
+app.get('/instaunfollow', function(req, res) {  
+    res.sendfile('./public/html/instoken.html');
 });
 
 
 app.get('*', function(req, res) {  
-    res.sendfile('./public/index.html');
+    res.sendfile('./public/html/index.html');
 });
 
 
 app.listen(8080, function() {  
-    console.log('Visit... http://localhost:8080/');
+    console.log('Visit... http://localhost:8080');
 });
