@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="angularInstagram">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Ricardo J. Ruiz</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <link rel="stylesheet" media="screen" href="../particles/style.css">
+
+
   <link rel="stylesheet" href="adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="adminlte/bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="adminlte/bower_components/Ionicons/css/ionicons.min.css">
@@ -14,14 +18,12 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="shortcut icon" href="z-icons/favicon.ico" type="image/x-icon">
   <link rel="icon" href="z-icons/favicon.ico" type="image/x-icon">
-
   <!-- PARTICLES -->
   <link rel="stylesheet" media="screen" href="particles/style.css">
 
-
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini" ng-controller="mainController">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -147,55 +149,26 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
     <!-- Content Header (Page header) -->
+    <!--
     <section class="content-header">
       <h1>
         Mi web
         <small>Página para enseñar mis proyectos</small>
       </h1>
     </section>
-
+	-->
 
     <!-- CODIGO  -->
-
     <section class="content container-fluid">
-
-        <!-- <div class="container" id="particles-js"> -->
-        <div class="container"> 
-            <div class="text-center titulo">
-                <h1>Cmd in a text box!</h1>
-            </div>
-            <br><br><br>
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 text-center">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control input-lg text-center console" placeholder="Insert your code. Ex: 'ls'" ng-model="code_">
-                        </div>
-                        <button class="btn btn-primary btn-lg" ng-click="submit()">Execute</button>
-                        <br><br>
-                        <textarea rows="10" class="text-center form-control input-lg console"  placeholder="Result" ng-model="result"></textarea>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-
-        
-        <!-- scripts -->
-        
-        <!-- PARTICLES -->
-        <script src="particles/particles.js"></script>
-        <script src="particles/particles_style.js"></script>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> 
-        <script src="../controllers/cmd.js"></script>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
+    </section>
 
     <!-- CODIGO  -->
 
 
-    </section>
   </div>
 
   <!-- Main Footer -->
@@ -209,6 +182,11 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+
+<!-- scripts -->
+<!-- PARTICLES -->
+<script src="particles/particles.js"></script>
+<script src="particles/particles_style.js"></script>
 
 <!-- jQuery 3 -->
 <script src="adminlte/bower_components/jquery/dist/jquery.min.js"></script>

@@ -33,9 +33,9 @@ app.get("/exec/cmd", function (req, res) {
 
 app.get("/exec/instid", function (req, res) {  
     
-    var code = req.query['code'];
+    var instid_username = req.query['instid_username'];
     
-    var command = "python projects/instid/main.py " + code;
+    var command = "python projects/instid/main.py " + instid_username;
     
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
@@ -119,7 +119,7 @@ app.get("/exec/instoken", function (req, res) {
 
 
 
-
+/*
 app.get('/cmd', function(req, res) {  
     res.sendfile('./public/html/cmd.html');
 });
@@ -143,6 +143,8 @@ app.get('/instafollow', function(req, res) {
 app.get('/instaunfollow', function(req, res) {  
     res.sendfile('./public/html/instaunfollow.html');
 });
+*/
+
 
 
 app.get('*', function(req, res) {  

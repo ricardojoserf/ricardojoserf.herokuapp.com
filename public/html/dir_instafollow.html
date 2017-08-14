@@ -1,0 +1,24 @@
+<div class="container"> 
+    <div class="text-center titulo">
+        <h1>Follow 30 people in Instagram using a tag!</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your username" ng-model="instafollow_username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control input-lg text-center" placeholder="Insert your password" ng-model="instafollow_password">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert a tag without #" ng-model="instafollow_tag">
+                </div>
+                <button class="btn btn-primary btn-lg" ng-click="instafollow_submit()">Follow!</button>
+                <br><br>
+                <textarea rows="1" class="text-center form-control input-lg"  placeholder="Result" ng-model="instafollow_result"></textarea>
+            </form>
+        </div>
+    </div>
+</div>

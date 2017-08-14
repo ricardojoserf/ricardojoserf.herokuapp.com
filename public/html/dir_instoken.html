@@ -1,0 +1,28 @@
+<div class="container"> 
+    <div class="text-center titulo">
+        <h1>Get Access Token for your App!</h1>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your client id" ng-model="instoken_client_id">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your client secret" ng-model="instoken_client_secret">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your redirect uri" ng-model="instoken_redirect_uri">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your code" ng-model="instoken_code_">
+                </div>
+
+                <button class="btn btn-primary btn-lg" ng-click="instoken_submit()">Follow!</button>
+                <br><br>
+                <textarea rows="1" class="text-center form-control input-lg"  placeholder="Result" ng-model="instoken_result"></textarea>
+            </form>
+        </div>
+    </div>
+</div>

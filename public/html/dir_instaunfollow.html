@@ -1,0 +1,21 @@
+<div class="container"> 
+    <div class="text-center titulo">
+        <h1>Follow users who dont follow you back!</h1>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your username" ng-model="instaunfollow_username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control input-lg text-center" placeholder="Insert your password" ng-model="instaunfollow_password">
+                </div>
+                <button class="btn btn-primary btn-lg" ng-click="instaunfollow_submit()">Unfollow!</button>
+                <br><br>
+                <textarea rows="1" class="text-center form-control input-lg"  placeholder="Result" ng-model="instaunfollow_result"></textarea>
+            </form>
+        </div>
+    </div>
+</div>
