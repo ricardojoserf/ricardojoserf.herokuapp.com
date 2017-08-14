@@ -1,10 +1,12 @@
 ﻿import requests
 import json
+import os
+
 import hashlib
 import hmac
 import urllib
 import uuid
-import os
+
 
 class InstagramAPI:
     API_URL = 'https://i.instagram.com/api/v1/'

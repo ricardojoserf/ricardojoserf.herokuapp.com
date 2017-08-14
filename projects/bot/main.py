@@ -1,4 +1,4 @@
-import aux_funcs, sys, json, time, random
+import aux_funcs, sys, json
 from LevPasha.InstagramAPI import InstagramAPI
 
 followers = []
@@ -33,16 +33,17 @@ def superUnfollow():
 def superFollow(tag):
 	api.tagFeed(tag)
 	media_id = api.LastJson 
-	MAXIMO = 30
+	MAXIMO = 10
+	# tiempoSleep = 1
 	tot = 0
-	print("\nTAG: "+str(tag)+"\n")
+	#print("\nTAG: "+str(tag)+"\n")
 	for i in media_id["items"]:
-		time.sleep( float( random.randint(10,60) / 10 ) )
+		# time.sleep( tiempoSleep )
 		username = i.get("user")["username"]
 		user_id = i.get("user")["pk"]
 		api.follow(user_id)
 		tot += 1
-		print("Following "+str(username)+" (with id "+str(user_id)+")")	
+		#print("Following "+str(username)+" (with id "+str(user_id)+")")	
 		if(tot>=MAXIMO):
 			break
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
