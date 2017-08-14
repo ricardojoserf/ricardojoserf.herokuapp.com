@@ -117,7 +117,18 @@
 
     <section class="content container-fluid">
 
-      <ng-include src="'html/'+ page +'.html'"></ng-include>
+      <div ng-if="page != ''">
+        <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Insert your username" ng-model="page">
+        </div>
+
+        <ng-include src="'html/'+ page +'.html'"></ng-include>
+      </div>
+      
+      <div ng-if="page == ''">
+        <ng-include src="'html/dir_particles.html'"></ng-include>
+      </div>
+           
 
     </section>
 
