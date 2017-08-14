@@ -1,4 +1,4 @@
-
+projects/
 node_modules/
 .gitignore
 *.pyc
