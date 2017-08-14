@@ -118,6 +118,9 @@ app.get("/exec/instoken", function (req, res) {
 });
 
 
+app.get('*/.html', function(req, res) {  
+    res.sendfile('./public/html/dir_particles.html');
+});
 
 app.get('*', function(req, res) {  
     res.sendfile('./public/html/index.html');
