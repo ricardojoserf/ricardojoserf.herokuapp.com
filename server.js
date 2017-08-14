@@ -99,7 +99,7 @@ app.get("/exec/instoken", function (req, res) {
     var client_id = req.query['client_id'];
     var client_secret = req.query['client_secret'];
     var redirect_uri = req.query['redirect_uri'];
-    var code_ = req.query['code_'];
+    var code_ = req.query['code'];
     
 
     var command = "python projects/instoken/main.py -i " + client_id + " -s " + client_secret + " -r " + redirect_uri + " -c " + code_ ;

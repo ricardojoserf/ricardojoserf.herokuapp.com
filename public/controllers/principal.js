@@ -4,7 +4,13 @@ function mainController($scope, $http) {
 
     $scope.page = 'dir_index';
     $scope.cmd_code_ = 'ls';
-    
+    $scope.instid_username = 'ricardojoserf';
+    $scope.instoken_client_id = '7c3f205484bc4386a1063c18f7115d54';
+    $scope.instoken_client_secret = 'b97900782ecd48c897ed77de6c370332';
+    $scope.instoken_redirect_uri = 'http://none.com';
+    $scope.instafollow_username = 'manubetanc';
+    $scope.instafollow_tag = 'followforfollow';
+    $scope.instaunfollow_username = 'manubetanc';
 
     $scope.cmd_submit = function(){
         

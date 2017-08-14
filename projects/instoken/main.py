@@ -1,4 +1,4 @@
-import sys, json, requests, os, config
+import sys, json, requests, os, config, cli
 
 def get_token(client_id, client_secret, redirect_uri, code):
 	
@@ -33,14 +33,14 @@ def main():
 		#print("Using the arguments, not the config.py file")
 		args=cli.get_args()
 		token = get_token(args.client_id, args.client_secret, args.redirect_uri, args.code)
-		return
+		#return
 	
 	else:
 		#print("Using the values in the config.py file")
 		token = get_token(config.client_id, config.client_secret, config.redirect_uri, config.code)
 
-	if(token != ""):
-		print("ACCESS TOKEN = "+token+"")
+	#if(token != ""):
+	print("ACCESS TOKEN = "+token+"")
 
 if __name__ == "__main__":
     main()
