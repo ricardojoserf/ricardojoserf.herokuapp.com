@@ -66,7 +66,7 @@ app.get("/exec/instafollow", function (req, res) {
         }
         else{
             res.header("Content-Type", "application/json");
-            res.end("Error obteniendo el ID");
+            res.end("Error obteniendo el token");
         }
     });
 
@@ -87,7 +87,7 @@ app.get("/exec/instaunfollow", function (req, res) {
         }
         else{
             res.header("Content-Type", "application/json");
-            res.end("Error obteniendo el ID");
+            res.end("Error al hacer follow");
         }
     });
 
@@ -111,39 +111,11 @@ app.get("/exec/instoken", function (req, res) {
         }
         else{
             res.header("Content-Type", "application/json");
-            res.end("Error obteniendo el ID");
+            res.end("Error al hacer unfollow");
         }
     });
 
 });
-
-
-
-/*
-app.get('/cmd', function(req, res) {  
-    res.sendfile('./public/html/cmd.html');
-});
-
-
-app.get('/instid', function(req, res) {  
-    res.sendfile('./public/html/instid.html');
-});
-
-
-app.get('/instoken', function(req, res) {  
-    res.sendfile('./public/html/instoken.html');
-});
-
-
-app.get('/instafollow', function(req, res) {  
-    res.sendfile('./public/html/instafollow.html');
-});
-
-
-app.get('/instaunfollow', function(req, res) {  
-    res.sendfile('./public/html/instaunfollow.html');
-});
-*/
 
 
 
@@ -152,6 +124,6 @@ app.get('*', function(req, res) {
 });
 
 
-app.listen(8080, function() {  
-    console.log('Visit... http://localhost:8080');
+app.listen(8000, function() {  
+    console.log('Visit... http://localhost:8000');
 });

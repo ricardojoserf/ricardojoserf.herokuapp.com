@@ -18,7 +18,6 @@
   <!-- PARTICLES -->
   <link rel="stylesheet" media="screen" href="visual/particles/style.css">
 
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-controller="mainController">
@@ -29,7 +28,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a ng-click="page = 'dir_index'" class="logo">
+    <a ng-click="page = 'dir_particles'" class="logo">
       <span class="logo-lg"><b>Mi</b> web</span>
     </a>
 
@@ -51,17 +50,19 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="https://pbs.twimg.com/profile_images/895767380944723968/RG2nXfqf_400x400.jpg" class="img-circle" alt="User Image">
+          <img src="visual/images/foto.jpg" class="img-circle" alt="User Image">
         </div>
-        <div class="pull-left info">
-          <p>Ricardo J. Ruiz</p>
+        <div class="pull-left info" >
+          <p><b>Ricardo José</b></p>
+          <p><b>Ruiz Fernández</b></p>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
+
         
-        <li class="header">PROYECTOS</li>
+        <li class="header">Some projects</li>
         
         <li><a ng-click="page = 'dir_cmd'"><i class="fa fa-link"></i> <span>Command Line</span></a></li>
         
@@ -79,26 +80,21 @@
           </ul>
         </li>
 
+        <li><a ng-click="page = 'dir_fingerprint'"><i class="fa fa-link"></i> <span>Fingerprinting in this browser</span></a></li>
+        
 
-        <!-- 
-        <li class="treeview">
-          <a href="/"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-        -->
-
-        <li class="header">REDES SOCIALES</li>
-
+        <li class="header">Contact</li>
         <li><a href="https://twitter.com/rjruizfdez"><i class="fa fa-link"></i> <span>Twitter</span></a></li>
         <li><a href="https://www.linkedin.com/in/rjruiz/"><i class="fa fa-link"></i> <span>Linkedin</span></a></li>
         <li><a href="https://github.com/rjruizfdez"><i class="fa fa-link"></i> <span>Github</span></a></li>
+        <li><a><i class="fa fa-link"></i> <span>ricardojruiz93@gmail.com</span></a></li>
+
+
+        <li class="header">Downloadable files</li>
+        <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPY2xweldjcnJKdTg/view?usp=sharing"><i class="fa fa-link"></i> <span>CV (español)</span></a></li>
+        <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPLTY4bXdjZ1VOSDQ/view?usp=sharing"><i class="fa fa-link"></i> <span>CV (english)</span></a></li>
+        <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPdlVlMWdWVEM3SnM/view?usp=sharing"><i class="fa fa-link"></i> <span>TFG</span></a></li>
+
 
       </ul>
       <!-- /.sidebar-menu -->
@@ -126,17 +122,23 @@
     </section>
 
 
+
+
 </div>
 <!-- ./wrapper -->
 
-<script src="visual/particles/particles.js"></script>
-<script src="visual/particles/particles_style.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> 
+
 <script src="../controllers/principal.js"></script>
+
 <script src="visual/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="visual/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="visual/adminlte/dist/js/adminlte.min.js"></script>
+
+<script src="visual/clientjs/dist/client.min.js"></script>
+
+
 
 </body>
 

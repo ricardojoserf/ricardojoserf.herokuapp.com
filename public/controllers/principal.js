@@ -2,15 +2,16 @@ angular.module('angularInstagram', []);
 
 function mainController($scope, $http) {  
 
-    $scope.page = 'dir_index';
+    $scope.page = 'dir_particles';
     $scope.cmd_code_ = 'ls';
     $scope.instid_username = 'ricardojoserf';
     $scope.instoken_client_id = '7c3f205484bc4386a1063c18f7115d54';
     $scope.instoken_client_secret = 'b97900782ecd48c897ed77de6c370332';
     $scope.instoken_redirect_uri = 'http://none.com';
-    $scope.instafollow_username = 'manubetanc';
+    //$scope.instafollow_username = 'manubetanc';
     $scope.instafollow_tag = 'followforfollow';
-    $scope.instaunfollow_username = 'manubetanc';
+    //$scope.instaunfollow_username = 'manubetanc';
+
 
     $scope.cmd_submit = function(){
         
@@ -65,7 +66,7 @@ function mainController($scope, $http) {
         $http.get('/exec/instafollow', { params:  {username: $scope.instafollow_username, password: $scope.instafollow_password, tag: $scope.instafollow_tag } } )
             .success(
                 function(response) {
-                    $scope.instafollow_result = "Following people!";
+                    $scope.instafollow_result = "Finished!";
                 }
             )
             .error(
@@ -81,7 +82,7 @@ function mainController($scope, $http) {
         $http.get('/exec/instaunfollow', { params:  {username: $scope.instaunfollow_username, password: $scope.instaunfollow_password } } )
             .success(
                 function(response) {
-                    $scope.instaunfollow_result = "Unfollowing people!";
+                    $scope.instaunfollow_result = "Finished!";
                 }
             )
             .error(

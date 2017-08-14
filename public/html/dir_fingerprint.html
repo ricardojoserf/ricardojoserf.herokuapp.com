@@ -1,0 +1,182 @@
+<div class="container" ng-controller="mainController"> 
+    <div class="text-center titulo">
+        <h1>Fingerprinting data in this browser using Client.js</h1>
+    </div>
+    <br><br><br>
+    <div class="row" id="fingerprintingTable">
+		<script>
+
+			var client = new ClientJS();
+			var client_values = [
+				(client.getFingerprint()),
+				client.getUserAgent(),
+				client.getUserAgentLowerCase(),
+				client.getBrowser(),
+				client.getBrowserVersion(),
+				client.getBrowserMajorVersion(),
+
+				client.getScreenPrint(),
+				client.getPlugins(),
+				client.getFonts(),
+				client.isLocalStorage(),
+				client.isSessionStorage(),
+				client.getCanvasPrint(),
+				client.getCPU(),
+				client.isMobile(),
+				client.isIphone(),
+				client.isIpad(),
+				client.isIpod(),
+
+				client.isIE(),
+				client.isChrome(),
+				client.isFirefox(),
+				client.isSafari(),
+				client.isOpera(),
+				client.getEngine(),
+				client.getEngineVersion(),
+				client.getOS(),
+				client.getOSVersion(),
+				client.isWindows(),
+				client.isMac(),
+				client.isLinux(),
+				client.isUbuntu(),
+				client.isSolaris(),
+				client.getDevice(),
+				client.getDeviceType(),
+				client.getDeviceVendor(),
+
+				client.isMobileMajor(),
+				client.isMobileAndroid(),
+				client.isMobileOpera(),
+				client.isMobileWindows(),
+				client.isMobileBlackBerry(),
+				client.isMobileIOS(),
+
+				client.getColorDepth(),
+				client.getCurrentResolution(),
+				client.getAvailableResolution(),
+				client.getDeviceXDPI(),
+				client.getDeviceYDPI(),
+				client.isJava(),
+				client.getJavaVersion(),
+				client.isFlash(),
+				client.getFlashVersion(),
+				client.isSilverlight(),
+				client.getSilverlightVersion(),
+				client.getMimeTypes(),
+				client.isMimeTypes(),
+				client.isFont(),
+
+				client.isCookie(),
+				client.getTimeZone(),
+				client.getLanguage(),
+				client.getSystemLanguage(),
+				client.isCanvas(),
+				client.getBrowserData()
+			]
+
+			var client_values_str = [
+				"client.getFingerprint()",
+				"client.getUserAgent()",
+				"client.getUserAgentLowerCase()",
+				"client.getBrowser()",
+				"client.getBrowserVersion()",
+				"client.getBrowserMajorVersion()",
+
+				"client.getScreenPrint()",
+				"client.getPlugins()",
+				"client.getFonts()",
+				"client.isLocalStorage()",
+				"client.isSessionStorage()",
+				"client.getCanvasPrint()",
+				"client.getCPU()",
+				"client.isMobile()",
+				"client.isIphone()",
+				"client.isIpad()",
+				"client.isIpod()",
+
+
+
+				"client.isIE()",
+				"client.isChrome()",
+				"client.isFirefox()",
+				"client.isSafari()",
+				"client.isOpera()",
+				"client.getEngine()",
+				"client.getEngineVersion()",
+				"client.getOS()",
+				"client.getOSVersion()",
+				"client.isWindows()",
+				"client.isMac()",
+				"client.isLinux()",
+				"client.isUbuntu()",
+				"client.isSolaris()",
+				"client.getDevice()",
+				"client.getDeviceType()",
+				"client.getDeviceVendor()",
+
+				"client.isMobileMajor()",
+				"client.isMobileAndroid()",
+				"client.isMobileOpera()",
+				"client.isMobileWindows()",
+				"client.isMobileBlackBerry()",
+				"client.isMobileIOS()",
+
+				"client.getColorDepth()",
+				"client.getCurrentResolution()",
+				"client.getAvailableResolution()",
+				"client.getDeviceXDPI()",
+				"client.getDeviceYDPI()",
+				"client.isJava()",
+				"client.getJavaVersion()",
+				"client.isFlash()",
+				"client.getFlashVersion()",
+				"client.isSilverlight()",
+				"client.getSilverlightVersion()",
+				"client.getMimeTypes()",
+				"client.isMimeTypes()",
+				"client.isFont()",
+
+				"client.isCookie()",
+				"client.getTimeZone()",
+				"client.getLanguage()",
+				"client.getSystemLanguage()",
+				"client.isCanvas()",
+				"client.getBrowserData()"
+			]
+
+
+			// var body = document.body
+			var tbl  = document.createElement('table');
+		    tbl.style.width  = '200%';
+		    tbl.style.border = '1px solid black';
+
+			for (var i = 0; i < (client_values.length); i++) {
+				
+					var tr = tbl.insertRow();
+					tr.setAttribute('width','100%');
+
+	                var td = tr.insertCell();
+	                td.appendChild(document.createTextNode(client_values_str[i]));
+	                td.setAttribute("style", "font-weight:bold; text-align:center");
+	                td.style.border = '1px solid black';
+	                td.setAttribute('rowSpan', '1');
+
+				   	var td2 = tr.insertCell();
+	                td2.appendChild(document.createTextNode(client_values[i]));
+	                td2.style.border = '1px solid black';
+	                td2.setAttribute('rowSpan', '1');	
+
+
+			}   
+
+			document.getElementById("fingerprintingTable").appendChild(tbl);
+			
+		</script>
+    </div>
+</div>
+
+
+
+
+
