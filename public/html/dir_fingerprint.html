@@ -1,12 +1,37 @@
+<br><br><br>
+
 <div class="container" ng-controller="mainController"> 
     <div class="text-center titulo">
         <h1>Fingerprinting data in this browser using Client.js</h1>
     </div>
     <br><br><br>
-    <div class="row" id="fingerprintingTable">
-		<script>
+
+    <div class="row">
+
+    	<div id="fingerprintingTable" class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+        		<h3>Canvas print:</h3>
+        		<br>
+                <div class="form-group" style="overflow:hidden;">
+                    <textarea rows="8" id="canvasprint" type="text" class="form-control input-lg"></textarea>
+                </div>
+                <br><br>
+                <h3>Fingerprinting values:</h3>
+  				<br>
+            </form>
+        </div>
+
+    </div>
+    
+	
+	<script>
 
 			var client = new ClientJS();
+			
+			var print = client.getCanvasPrint();
+
+			document.getElementById("canvasprint").innerHTML = print;
+
 			var client_values = [
 				(client.getFingerprint()),
 				client.getUserAgent(),
@@ -20,7 +45,7 @@
 				client.getFonts(),
 				client.isLocalStorage(),
 				client.isSessionStorage(),
-				client.getCanvasPrint(),
+				//client.getCanvasPrint(),
 				client.getCPU(),
 				client.isMobile(),
 				client.isIphone(),
@@ -88,7 +113,7 @@
 				"client.getFonts()",
 				"client.isLocalStorage()",
 				"client.isSessionStorage()",
-				"client.getCanvasPrint()",
+				//"client.getCanvasPrint()",
 				"client.getCPU()",
 				"client.isMobile()",
 				"client.isIphone()",
@@ -148,13 +173,13 @@
 
 			// var body = document.body
 			var tbl  = document.createElement('table');
-		    tbl.style.width  = '200%';
+		    tbl.style.width  = '100%';
 		    tbl.style.border = '1px solid black';
 
 			for (var i = 0; i < (client_values.length); i++) {
 				
 					var tr = tbl.insertRow();
-					tr.setAttribute('width','100%');
+					tr.setAttribute('width','90%');
 
 	                var td = tr.insertCell();
 	                td.appendChild(document.createTextNode(client_values_str[i]));
@@ -167,7 +192,6 @@
 	                td2.style.border = '1px solid black';
 	                td2.setAttribute('rowSpan', '1');	
 
-
 			}   
 
 			document.getElementById("fingerprintingTable").appendChild(tbl);
@@ -176,7 +200,4 @@
     </div>
 </div>
 
-
-
-
-
+<br><br>
