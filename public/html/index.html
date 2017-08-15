@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ricardo J. Ruiz</title>
+  <title>Ricardo Ruiz's Website</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="visual/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="visual/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
@@ -26,12 +26,12 @@
 
   <!-- Main Header -->
   <header class="main-header">
-
+    
     <!-- Logo -->
     <a ng-click="page = 'dir_particles'" class="logo">
-      <span class="logo-lg"><b>Mi</b> web</span>
+      <span class="logo-lg"><b>Index</b></span>
     </a>
-
+   
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -40,24 +40,26 @@
     </nav>
 
   </header>
-
+  
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-
+    
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
+      
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
+
         <div class="pull-left image">
           <img src="visual/images/foto.jpg" class="img-circle" alt="User Image">
         </div>
+      
         <div class="pull-left info" >
-          <p><b>Ricardo José</b></p>
+          <p>Ricardo José</p>
           <p><b>Ruiz Fernández</b></p>
         </div>
+      
       </div>
-
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -87,7 +89,7 @@
         <li class="header">CONTACT</li>
         <li><a href="https://www.linkedin.com/in/rjruiz/" target="_blank"><i class="fa fa-linkedin"></i> <span>Linkedin</span></a></li>
         <li><a href="https://github.com/rjruizfdez" target="_blank"><i class="fa fa-github-alt"></i> <span>Github</span></a></li>
-        <li><a href="mailto:ricardojruiz93@gmail.com"><i class="fa fa-envelope" target="_blank"></i><span>ricardojruiz93@gmail.com</span></a></li>
+        <li><a href="mailto:ricardojruiz93@gmail.com"><i class="fa fa-envelope" target="_blank"></i><span>E-mail</span></a></li>
         <li><a href="https://twitter.com/rjruizfdez" target="_blank"><i class="fa fa-twitter"></i> <span>Twitter</span></a></li>
 
       </ul>
@@ -99,41 +101,29 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Mi web
-        <small>Página para enseñar mis proyectos</small>
-      </h1>
+    
+    <section class="content-header text-center">
+      <br>
+      <h1>My Website</h1>
+      <br>
     </section>
 
-
-    <section class="content container-fluid">
-
-      <div ng-if="page != ''">
-        <ng-include src="'html/'+ page +'.html'"></ng-include>
-      </div>
-
+    <section class="content-fluid">
+      <ng-include src="'html/'+ page +'.html'"></ng-include>
     </section>
 
-
-
+  </div>
 
 </div>
 <!-- ./wrapper -->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> 
-
 <script src="../controllers/principal.js"></script>
-
 <script src="visual/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="visual/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="visual/adminlte/dist/js/adminlte.min.js"></script>
-
 <script src="visual/clientjs/dist/client.min.js"></script>
 
-
-
 </body>
-
 </html>
