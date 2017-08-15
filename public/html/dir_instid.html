@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control input-lg text-center console" placeholder="Insert your username" ng-model="instid_username">
                 </div>
-                <button class="btn btn-primary btn-lg" ng-click="instid_submit()">Get my id</button>
+                <button class="btn btn-primary btn-lg" ng-click="instid_submit(); instid_result='Wait please...'">Get my id</button>
                 <br><br>
                 <textarea rows="10" class="text-center form-control input-lg console"  placeholder="Your ID" ng-model="instid_result"></textarea>
             </form>
