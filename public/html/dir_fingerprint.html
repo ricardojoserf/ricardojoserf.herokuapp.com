@@ -4,7 +4,7 @@
 
 <div id="overlay" class="container" ng-controller="mainController"> 
     <div class="text-center titulo">
-        <h1>Fingerprinting data in this browser using Client.js</h1>
+        <h1>Fingerprinting data in this browser</h1>
     </div>
     <br><br><br>
 
@@ -41,6 +41,7 @@
 				client.getBrowser(),
 				client.getBrowserVersion(),
 				client.getBrowserMajorVersion(),
+				
 
 				client.getScreenPrint(),
 				client.getPlugins(),
@@ -109,21 +110,18 @@
 				"client.getBrowser()",
 				"client.getBrowserVersion()",
 				"client.getBrowserMajorVersion()",
+				
 
 				"client.getScreenPrint()",
 				"client.getPlugins()",
 				"client.getFonts()",
 				"client.isLocalStorage()",
 				"client.isSessionStorage()",
-				//"client.getCanvasPrint()",
 				"client.getCPU()",
 				"client.isMobile()",
 				"client.isIphone()",
 				"client.isIpad()",
 				"client.isIpod()",
-
-
-
 				"client.isIE()",
 				"client.isChrome()",
 				"client.isFirefox()",
@@ -170,6 +168,7 @@
 				"client.getSystemLanguage()",
 				"client.isCanvas()",
 				"client.getBrowserData()"
+
 			]
 
 
@@ -180,7 +179,7 @@
 		    tbl.setAttribute("style", "background-color:white");
 
 		    var tr = tbl.insertRow();
-			tr.setAttribute('width','90%');
+			tr.setAttribute('width','35%');
 
             var td = tr.insertCell();
             td.appendChild(document.createTextNode("FIELD"));
@@ -194,23 +193,88 @@
             td2.style.border = '1px solid black';
             td2.setAttribute('rowSpan', '1');
 
+
 			for (var i = 0; i < (client_values.length); i++) {
-				
-					var tr = tbl.insertRow();
-					tr.setAttribute('width','90%');
+										
+	                if(client_values_str[i] === "client.getBrowserData()"){
+	                	
+	                	var values = client_values[i];
+	    
+	                	for(var i in values){
+							var val = "";
+						    var key = i;
+						    var field = values[i];
+						
+							if (key === "ua"){
+								val = field;
+							}
+							else{
+								
+								var tot = 0;
 
-	                var td = tr.insertCell();
-	                td.appendChild(document.createTextNode(client_values_str[i]));
-	                td.setAttribute("style", "font-weight:bold; text-align:center; font-size: 125%");
-	                td.style.border = '1px solid black';
-	                td.setAttribute('rowSpan', '1');
+								for(var j in field){
+							    	
+							    	tot += 1;
 
-				   	var td2 = tr.insertCell();
-	                td2.appendChild(document.createTextNode(client_values[i]));
-	                td2.setAttribute("style", "font-size: 125%");
-	                td2.style.border = '1px solid black';
-	                td2.setAttribute('rowSpan', '1');	
+							        var sub_key = j;
+							        var sub_field = field[j];
+							        
+							        var count =  Object.keys(field).length;
+							        
+							        if (tot != count){
+							        	val = val + " '" + sub_key + "': "+ sub_field+", ";	
+							        }
+							        else{
+							        	val = val + " '" + sub_key + "': "+ sub_field;
+							        }
+							        
+						    	}
+							}
+							
+							var tr = tbl.insertRow();
+							tr.setAttribute('width','35%');
 
+			                var td = tr.insertCell();
+   							td.appendChild(document.createTextNode(("client.getBrowserData() - "+key)));
+			                td.setAttribute("style", "font-weight:bold; text-align:center; font-size: 125%");
+			                td.style.border = '1px solid black';
+			                td.setAttribute('rowSpan', '1');
+
+							var td2 = tr.insertCell();	
+							td2.appendChild(document.createTextNode(val));
+			                td2.setAttribute("style", "font-size: 125%");
+			                td2.style.border = '1px solid black';
+			                td2.setAttribute('rowSpan', '1');	    						
+						}
+
+
+
+							
+
+	                }	
+
+	                else{
+	                	var tr = tbl.insertRow();
+						tr.setAttribute('width','35%');
+
+		                var td = tr.insertCell();
+		                td.appendChild(document.createTextNode(client_values_str[i]));
+		                td.setAttribute("style", "font-weight:bold; text-align:center; font-size: 125%");
+		                td.style.border = '1px solid black';
+		                td.setAttribute('rowSpan', '1');
+
+	                	var td2 = tr.insertCell();
+					   	var value = client_values[i];
+					   	if (value === ""){
+					   		value = "No value";
+					   	}
+		                td2.appendChild(document.createTextNode(value));
+		                td2.setAttribute("style", "font-size: 125%");
+		                td2.style.border = '1px solid black';
+		                td2.setAttribute('rowSpan', '1');	
+	
+	                }
+				   	
 			}   
 
 			document.getElementById("fingerprintingTable").appendChild(tbl);
