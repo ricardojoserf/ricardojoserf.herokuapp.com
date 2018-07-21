@@ -65,7 +65,7 @@
       <ul class="sidebar-menu" data-widget="tree">
 
         <li class="header">SOME PROJECTS</li>
-        
+        <li><a ng-click="page = 'dir_cmd'"><i class="fa fa-terminal"></i> <span>Command Line</span></a></li>
         <li class="treeview">
           <a href="/"><i class="fa fa-instagram"></i> <span>Instagram</span>
             <span class="pull-right-container">
@@ -73,63 +73,24 @@
               </span>
           </a>
           <ul class="treeview-menu">
+            <li><a ng-click="page = 'dir_instid'"><i class="fa fa-circle-o"></i> Get ID</a></li>
             <li><a ng-click="page = 'dir_instafollow'"><i class="fa fa-circle-o"></i> BOT: Follow people</a></li>
             <li><a ng-click="page = 'dir_instaunfollow'"><i class="fa fa-circle-o"></i> BOT: Unfollow people</a></li>
             <li><a ng-click="page = 'dir_instoken'"><i class="fa fa-circle-o"></i> Get Access Token for your App</a></li>
-            <li><a ng-click="page = 'dir_instid'"><i class="fa fa-circle-o"></i> Get ID</a></li>
           </ul>
         </li>
-
         <li><a ng-click="page = 'dir_fingerprint'"><i class="fa fa-chrome"></i> <span>Browser fingerprinting</span></a></li>
         
-        <li><a ng-click="page = 'dir_cmd'"><i class="fa fa-terminal"></i> <span>CMD</span></a></li>
-        
-        <li class="treeview">
-          <a href="/"><i class="fa fa-twitter"></i> <span>Twitter</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="https://github.com/rjruizfdez/twitter-detector" target="_blank"><i class="fa fa-circle-o"></i> <span>People detector</span></a></li>        
-          </ul>
-        </li>
-             
-        <li class="treeview">
-          <a href="/"><i class="fa fa-android"></i> <span>Android Apps</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="https://play.google.com/store/apps/details?id=fry.urlo" target="_blank"><i class="fa fa-circle-o"></i> <span>URL Organizer</span></a></li>        
-            <li><a href="https://play.google.com/store/apps/details?id=com.globalapp.Global" target="_blank"><i class="fa fa-circle-o"></i> <span>Global Bus App</span></a></li>        
-            <li><a href="https://github.com/rjruizfdez/location-android-app" target="_blank"><i class="fa fa-circle-o"></i> <span>Salvavidapp</span></a></li>        
-          </ul>
-        </li>
+        <li class="header">DOWNLOADABLE FILES</li>
+        <li><a href="visual/files/CV_Ricardo_Ruiz_english.pdf" download><i class="fa fa-file-text"></i> <span>CV (english)</span></a></li>        
+        <li><a href="visual/files/CV_Ricardo_Ruiz_spanish.pdf" download><i class="fa fa-file-text"></i> <span>CV (spanish)</span></a></li>
+        <li><a href="visual/files/TFG_Ricardo_Ruiz.pdf" download><i class="fa fa-book"></i> <span>Bachelor's thesis</span></a></li>
 
-
-        <li class="header">SOME FILES</li>
-        <li class="treeview">
-          <a href="/"><i class="fa fa-file-text"></i><span>CV</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPY2xweldjcnJKdTg/view" target="_blank"><i class="fa fa-circle-o"></i> <span>CV (spanish)</span></a></li>
-            <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPLTY4bXdjZ1VOSDQ/view?usp=sharing" target="_blank"><i class="fa fa-circle-o"></i> <span>CV (english)</span></a></li>        
-          </ul>
-        </li>
-        
-        <li><a href="https://drive.google.com/file/d/0B6XTdSmL7LIPdlVlMWdWVEM3SnM/view?usp=sharing" target="_blank"><i class="fa fa-book"></i> <span>Bachelor's thesis</span></a></li>
-
-        
         <li class="header">CONTACT</li>
-        <li><a href="mailto:ricardojruiz93@gmail.com"><i class="fa fa-envelope" target="_blank"></i><span>E-mail</span></a></li>
         <li><a href="https://www.linkedin.com/in/rjruiz/" target="_blank"><i class="fa fa-linkedin"></i> <span>Linkedin</span></a></li>
         <li><a href="https://github.com/rjruizfdez" target="_blank"><i class="fa fa-github-alt"></i> <span>Github</span></a></li>
-        <li><a href="https://twitter.com/rjruizfdez" target="_blank"><i class="fa fa-twitter-square"></i> <span>Twitter</span></a></li>
+        <li><a href="mailto:ricardojruiz93@gmail.com"><i class="fa fa-envelope" target="_blank"></i><span>E-mail</span></a></li>
+        <li><a href="https://twitter.com/rjruizfdez" target="_blank"><i class="fa fa-twitter"></i> <span>Twitter</span></a></li>
 
       </ul>
       <!-- /.sidebar-menu -->

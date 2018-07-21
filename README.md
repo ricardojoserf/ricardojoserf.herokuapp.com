@@ -1,1 +1,1 @@
-# [ricardojruiz](http://ricardojruiz.com)
+# ricardojruiz
