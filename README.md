@@ -1,5 +1,7 @@
 # My personal website
 
+URL: https://ricardojruiz.herokuapp.com/
+
 Technologies: 
 
 - *NodeJS* for routing 
@@ -10,9 +12,11 @@ Technologies:
 
 - *Heroku* to host the server 
 
+
 ![Screenshot](images/Screenshot_1.png)
 
 ![Screenshot](images/Screenshot_2.png)
+
 
 
 I did it in the summer of 2017. 
