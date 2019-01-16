@@ -35,7 +35,7 @@ app.get("/exec/instid", function (req, res) {
     
     var instid_username = req.query['instid_username'];
     
-    var command = "python projects/instid/main.py " + instid_username;
+    var command = "python projects/instagram-user-id/main.py " + instid_username;
     
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
@@ -57,7 +57,7 @@ app.get("/exec/instafollow", function (req, res) {
     var password = req.query['password'];
     var tag = req.query['tag'];
 
-    var command = "python projects/bot/main.py -u " + username + " -p " + password + " -o superFollow -t " + tag;
+    var command = "python projects/instagram-followers-bot/main.py -u " + username + " -p " + password + " -o follow-tag -t " + tag;
     
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
@@ -78,7 +78,7 @@ app.get("/exec/instaunfollow", function (req, res) {
     var username = req.query['username'];
     var password = req.query['password'];
 
-    var command = "python projects/bot/main.py -u " + username + " -p " + password + " -o superUnfollow";
+    var command = "python projects/instagram-followers-bot/main.py -u " + username + " -p " + password + " -o super-unfollow";
     
     exec(command, function (error, stdout, stderr) {
         if (error === null) {
