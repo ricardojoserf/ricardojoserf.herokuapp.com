@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h1>Instagram Followers Bot</h1>
+<br>
+<br>
+<h4>Download from Github: <a href="https://github.com/ricardojoserf/instagram-followers-bot">https://github.com/ricardojoserf/instagram-followers-bot</a></h4>
+<br>
+<br>
+<h2>Usage </h2><br>
+<br>
+<h4>Follow users using the tag you introduce:</h4>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG
+"></input><br><br>
+<br>
+<h4>Follow users from a location:</h4>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID
+"></input><br><br>
+<br>
+<h4>Follow back all the users who you don't follow back:</h4>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -u USERNAME -p PASSWORD -o super-followback
+"></input><br><br>
+<br>
+<h4>Unfollow all the users who don't follow you back:</h4>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -u USERNAME -p PASSWORD -o super-unfollow
+"></input><br><br>
+<b>NOTE</b>: Fill "whitelist.txt" file with the accounts you will never want to unfollow<br>
+<br>
+<br>
+<h4>Show report (who follows, unfollows, follows you back):</h4>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -u USERNAME -p PASSWORD -o info
+"></input><br><br>
+<br>
+<h2> Examples</h2><br>
+<br>
+<i>python main.py -u USERNAME -p PASSWORD -o follow-tag -t cat</i> : <b>Follow users using the tag 'cat'</b> <br>
+<br>
+<i>python main.py -u USERNAME -p PASSWORD -o follow-location -t 127963847</i> : <b>Follow users from Spain</b> <br>
+<br>
+<i>python main.py -u USERNAME -p PASSWORD -o super-followback</i>: <b>Now you are following users you didn't follow but they followed you</b><br>
+<br>
+<i>python main.py -u USERNAME -p PASSWORD -o super-unfollow</i>: <b>Now you are not following users who don't follow you</b><br>
+<br>
+<br>
+<h2> Acknowledgment</h2><br>
+<br>
+The really good repo is the levpasha's one: <a href="https://github.com/LevPasha/Instagram-API-python">https://github.com/LevPasha/Instagram-API-python</a><br>
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)<br>
+<br><br><br><br>
+
+
+</div>
+</body>
+</html>

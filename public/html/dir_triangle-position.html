@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h1>Triangle positions</h1>
+<br>
+<br>
+<h4>Download from Github:  <a href="https://github.com/ricardojoserf/triangle-position">https://github.com/ricardojoserf/triangle-position</a></h4>
+<br>
+<br>
+Triangle position given 3 coordinates and 3 radios or 4 coordinates and 4 radios<br>
+<br>
+- <i>tripos.py</i>: triangulate ONE coordinate from 3 coordinates + 3 ratios<br>
+<br>
+- <i>quapos.py</i>: triangulate one AREA calculating 4 points from the 4 coordinates + 4 ratios (like executing tripos.py 4 times with 4 coordinates)<br>
+<br>
+<br>
+<h2> 3 coordinates</h2><br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python tripos.py -c1 {coord_1} -c2 {coord_2} -c3 {coord_3} -r1 {ratio_1} -r2 {ratio_2} -r3 {ratio_3}
+"></input><br><br>
+<br>
+<h4> Example 1:</h4><br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python tripos.py -c1 40.443580,-3.727077 -c2 40.452052,-3.725831 -c3 40.451418,-3.717722 -r1 0.65 -r2 0.75
+-r3 0.65
+"></input><br><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri2.png"><br>
+<br>
+Result using Plotly:<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri5.png"><br>
+<br>
+Result not using Plotly (Matplotlib does not need Access Token or API KEY is not a good option):<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri1.png"><br>
+<br>
+<h4> Example 2. Changing C3:</h4><br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python tripos.py -c1 40.443580,-3.727077 -c2 40.452052,-3.725831 -c3 40.443587,-3.715664 -r1 0.65 -r2 0.75
+-r3 0.65
+"></input><br><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri4.png"><br>
+<br>
+Result using Plotly:<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri6.png"><br>
+<br>
+Result using Basemap:<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri3.png"><br>
+<br>
+<br>
+<br>
+<h2> 4 coordinates</h2><br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python quapos.py -c1 {coord_1} -c2 {coord_2} -c3 {coord_3} -c4 {coord_4} -r1 {ratio_1} -r2 {ratio_2} -r3 {ratio_3}
+-r4 {ratio_4}
+"></input><br><br>
+<br>
+Coordinates and ratios must fit this scheme (yes, made with Paint), so the coordinate to calculate is "inside the box":<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri4.png"><br>
+<br>
+<br>
+<h3> Example:</h3><br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python quapos.py -c1 40.443587,-3.715664 -c2 40.451418,-3.717722 -c3 40.452052,-3.725831 -c4 40.443580,-3.727077
+-r1 0.47 -r2 0.5 -r3 0.82 -r4 0.785
+"></input><br><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri2.png"><br>
+<br>
+Result using Basemap (calculated area in yellow):<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri1.png"><br>
+<br>
+Result using Plotly:<br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri3.png"><br>
+<br>
+<br>
+<br>
+<br>
+<h2> Installation</h2><br>
+<br>
+- Fill config.py with Plotpy username and API Key -> Visit https://plot.ly/Auth/login/?next=%2Fsettings to sign up, visit "API Keys" and click "Regenerate Key"<br>
+<br>
+- Fill config.py with Mapbox Access Token -> Visit https://www.mapbox.com/signup/?route-to=%22/account/access-tokens%22 and copy the Access Token<br>
+<br>
+- Run <i>sudo sh intall.sh</i> to install dependencies<br>
+<br>
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)<br>
+<br>
+<br>
+
+
+</div>
+</body>
+</html>

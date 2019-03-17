@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h2> Assignment 4: Custom encoding schema</h2><br>
+<br>
+- Create a custom encoding scheme like the "Insertion Encoder" we showed you<br>
+<br>
+- PoC with using execve-stack as the shellcode to encode with your schema and execute<br>
+<br>
+<br>
+<br>
+<h2> Usage</h2><br>
+<br>
+For this assignment, a Python script has been created which generates the shellcode, updates and compiles the <i>decoder.nasm</i> file and updates and compiles the <i>shellcode.c</i> file, generating the final executable:<br>
+<br>
+<code><h4>python test.py  && ./shellcode
+</code></h4><br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/1.png?raw=true"><br>
+<br>
+<br>
+<h2> Custom encoding</h2><br>
+<br>
+For this exercise, we start from the "Insertion" and "NOP" encoders from the course, update both ideas and create a single encoding algorithm.<br>
+<br>
+<br>
+<h3> Idea 1: Opcodes encoding</h3>
+<br>
+There will be 3 operations to encode every opcode: a ROR operation with the value 1 ("rotating" the bits once towards the "right"), a XOR with <i>0xe0</i> and a substraction with the value 7. <br>
+<br>
+Thereby, the decoding function will first add the value 7, then XOR the value with <i>0xe0</i> and finally do the ROL operation with the value 1 ("rotating" the bits once towards the "left").<br>
+<br>
+This can be understood better with the next picture:<br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/2.png?raw=true"><br>
+<br>
+<br>
+<h3> Idea 2: Random inserted opcodes</h3>
+<br>
+There will be fake opcodes inserted between every correct opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run. <br>
+<br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/3.png?raw=true"><br>
+<br>
+The value to verify the shellcode has finished will be calculated in the Python script, a not used value between the minimum and the maximum of the opcode values of the shellcode. For example, in this case the value is "\xe0".<br>
+<br>
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: https://www.pentesteracademy.com/course?id=3<br>
+<br>
+Student ID: SLAE - 1433<br>
+
+<br>
+<br>
+
+</div>
+</body>
+</html>

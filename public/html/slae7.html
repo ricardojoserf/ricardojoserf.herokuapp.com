@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+<br>
+<br>
+<h2> Assignment 7: Custom crypter</h2><br>
+<br>
+- Create a custom crypter like the one shown in the "crypters" video<br>
+<br>
+- Free to use any existing encryption schema<br>
+<br>
+- Can use any programming language<br>
+<br>
+<br>
+<h2> Encryption</h2><br>
+In this assignment the encryption chosen is AES-CBC. The programming language is Python because i found an example to execute the shellcode with it.<br>
+<br>
+<br>
+<h2> Usage</h2><br>
+<br>
+- '-k', '--aes_key': <i>AES key used</i>.<br>
+<br>
+- '-e', '--encrypt': <i>Shellcode to encrypt</i>.<br>
+<br>
+- '-d', '--decrypt': <i>Encrypted shellcode to decrypt</i>.<br>
+<br>
+- '-x', '--execute': <i>Execute the shellcode after decrypting or not</i>.<br>
+<br>
+<br>
+<h3> Encryption</h3>
+<code><h4>python main.py -e "\x31\xc0\x31\xdb\x31\xc9\x31\xd2\x50\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x68\x2f\x2f\x2f\x2f\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd" -k "ricardoricardo11"
+</code></h4><br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a7_Custom_Crypter/images/1.png?raw=true"><br>
+<br>
+<h3> Decryption</h3>
+<code><h4>python main.py -d 7L8lgzzXoM1KnsFbIFOPgY3PPx8K5aM5IT2HC8ULBrhcYvbTr4/ItEVN6DgDuJ7TY0d9isE2IuHTC3hWMa4lzkbc6toFTdOnhzc9v/YwqRe62L+dqZ8XQWFk5VHl9R+Dr7ctq2BCAqmozxKeDGLd7iojztY0fTpcUy8gCu/Z5Rf4f4L5tsBna8epwgmBr6Op0/4S44ZEnbfiIH/QtEYUqw== -k "ricardoricardo11"  -x
+</code></h4><br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a7_Custom_Crypter/images/2.png?raw=true"><br>
+<br>
+<br>
+<h2> Note</h2><br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: https://www.pentesteracademy.com/course?id=3<br>
+<br>
+Student ID: SLAE - 1433<br>
+
+<br>
+<br>
+
+</div>
+</body>
+</html>

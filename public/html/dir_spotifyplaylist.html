@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+
+<br>
+<br>
+<h1>Downloading Spotify Playlists</h1>
+<br>
+<br>
+<h4>Download from Github: <a href="https://github.com/ricardojoserf/spotify-playlist-downloader">https://github.com/ricardojoserf/spotify-playlist-downloader</a></h4>
+<br>
+<br><br>
+<h4>
+From Playlist ID:
+</h4><br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -a ACCESS_TOKEN -p PLAYLIST_SPOTIFY_ID -d DIRECTORY
+"></input><br><br>
+<br>
+<h4>
+From Playlist URI:
+</h4><br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+python main.py -a ACCESS_TOKEN -u PLAYLIST_SPOTIFY_URI -d DIRECTORY
+"></input><br><br>
+<br>
+<br>
+<h2> Example</h2><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/spotify-playlist-downloader/master/images/2.png"><br>
+<br>
+<br>
+<br>
+<h4>
+Result:
+</h4><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/spotify-playlist-downloader/master/images/3.png"><br>
+<br>
+<br>
+<br>
+<br>
+<h2> Steps / Requirements</h2><br>
+<br>
+<h4> 1) Get your own access token </h4><br>
+<br>
+You can visit the official page (https://developer.spotify.com/documentation/general/guides/authorization-guide/) or follow these instructions:<br>
+<br>
+- Visit and log into: https://developer.spotify.com/dashboard/applications<br>
+<br>
+- Create a "test" application<br>
+<br>
+- Click "Edit settings" and add "https://example.com/callback/" as "Redirect URIs". Save changes<br>
+<br>
+- Copy your "Client ID" value<br>
+<br>
+- Replace "CLIENT_ID" with your own value and visit https://accounts.spotify.com/authorize?client_id=<b>CLIENT_ID</b>&redirect_uri=https:%2F%2Fexample.com%2Fcallback/&scope=user-read-private%20user-read-email&response_type=token&state=123<br>
+<br>
+- Click "Accept" and extract your access token from the url:http://example.com/callback/#access_token=<b>ACCESS_TOKEN</b>&token_type=Bearer&expires_in=3600&state=123
+
+<br>
+<br>
+<br>
+<h4> 2.a) Get the Playlist ID if using web client...</h4><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/spotify-playlist-downloader/master/images/4.png"><br>
+<br>
+<br>
+<br>
+<h4> 2.b) ...or get the Playlist URI if using heavy client</h4><br>
+<br>
+<img src="https://raw.githubusercontent.com/ricardojoserf/spotify-playlist-downloader/master/images/1.png"><br>
+<br>
+<br>
+<br>
+<br>
+<h4> 3) Install dependencies</h4><br>
+<br>
+<h4>
+Python 2.x:
+</h4>
+<br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+sudo apt-get install ffmpeg libavcodec-
+pip install instantmusic
+"></input><br><br>
+<br>
+<h4>
+Python 3.x:
+</h4>
+<br>
+<br>
+<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+sudo apt-get install ffmpeg libavcodec-
+pip3 install instantmusic
+"></input><br><br>
+<br>
+<br>
+<br>
+<h2> Authors</h2><br>
+<br>
+<h4>
+- https://github.com/Javisalva9
+</h4>
+<br>
+<br>
+<h4>
+- https://github.com/ricardojoserf
+</h4>
+<br>
+<br>
+<h2> Note</h2><br>
+<br>
+Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)<br>
+<br>
+<br>
+
+
+</div>
+</body>
+</html>
