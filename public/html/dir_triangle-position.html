@@ -30,17 +30,15 @@ Triangle position given 3 coordinates and 3 radios or 4 coordinates and 4 radios
 <br>
 <h2> 3 coordinates</h2><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python tripos.py -c1 {coord_1} -c2 {coord_2} -c3 {coord_3} -r1 {ratio_1} -r2 {ratio_2} -r3 {ratio_3}
-"></input><br><br>
-<br>
+</code><br>
 <h4> Example 1:</h4><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python tripos.py -c1 40.443580,-3.727077 -c2 40.452052,-3.725831 -c3 40.451418,-3.717722 -r1 0.65 -r2 0.75
 -r3 0.65
-"></input><br><br>
-<br>
+</code><br>
 <img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri2.png"><br>
 <br>
 Result using Plotly:<br>
@@ -53,11 +51,10 @@ Result not using Plotly (Matplotlib does not need Access Token or API KEY is not
 <br>
 <h4> Example 2. Changing C3:</h4><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python tripos.py -c1 40.443580,-3.727077 -c2 40.452052,-3.725831 -c3 40.443587,-3.715664 -r1 0.65 -r2 0.75
 -r3 0.65
-"></input><br><br>
-<br>
+</code><br>
 <img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/tri4.png"><br>
 <br>
 Result using Plotly:<br>
@@ -71,11 +68,10 @@ Result using Basemap:<br>
 <br>
 <br>
 <h2> 4 coordinates</h2><br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python quapos.py -c1 {coord_1} -c2 {coord_2} -c3 {coord_3} -c4 {coord_4} -r1 {ratio_1} -r2 {ratio_2} -r3 {ratio_3}
 -r4 {ratio_4}
-"></input><br><br>
-<br>
+</code><br>
 Coordinates and ratios must fit this scheme (yes, made with Paint), so the coordinate to calculate is "inside the box":<br>
 <br>
 <img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri4.png"><br>
@@ -83,11 +79,10 @@ Coordinates and ratios must fit this scheme (yes, made with Paint), so the coord
 <br>
 <h3> Example:</h3><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python quapos.py -c1 40.443587,-3.715664 -c2 40.451418,-3.717722 -c3 40.452052,-3.725831 -c4 40.443580,-3.727077
 -r1 0.47 -r2 0.5 -r3 0.82 -r4 0.785
-"></input><br><br>
-<br>
+</code><br>
 <img src="https://raw.githubusercontent.com/ricardojoserf/triangle-position/master/images/quatri2.png"><br>
 <br>
 Result using Basemap (calculated area in yellow):<br>

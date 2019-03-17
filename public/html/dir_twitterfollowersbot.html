@@ -32,49 +32,43 @@ A bot for Twitter. <b>OPTIONS</b>: Follow users from query, geocode or list; unf
 Follow people who tweeted a word (<b>query</b>), limited to the <b>limit</b> value:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o follow -q {query} -l {limit}
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Follow people who tweeted in a location (<b>geocode</b>), limited to the <b>limit</b> value:
 </h4><br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o follow -g {geocode} -l {limit}
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Follow users from a list file:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o follow -i {list_file}
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Unfollow users from a list file:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o unfollow -i {list_file}
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Unfollow all the people who do not follow you back and are not included in <i>whitelist.txt</i>:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o unfollow-back
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Show report (followers, followings, people who do not follow me back and people i do not follow back):
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -o info
-"></input><br><br>
-<br>
+</code><br>
 <br>
 <h2> Examples</h2><br>
 <br>
@@ -82,29 +76,26 @@ python twitter-bot.py -o info
 Follow 5 people tweeting 'oscp':<br>
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python twitter-bot.py -q "oscp" -l 5 -o follow
-"></input><br><br>
-<img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im1.png"><br>
+</code><br><img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im1.png"><br>
 <br>
 <h4>
 Follow 7 people tweeting in 40.432,-3.708:
 </h4>
 <br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python3 twitter-bot.py -g "40.432,-3.708,10km" -l 7 -o follow
-"></input><br><br>
-<img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im2.png"><br>
+</code><br><img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im2.png"><br>
 <br>
 <h4>
 Follow users in example.lst:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python3 twitter-bot.py -o follow -i example.lst
-"></input><br><br>
-<img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im3.png"><br>
+</code><br><img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im3.png"><br>
 <br>
 <h4>
 Unfollow users in example.lst:<br>
@@ -116,15 +107,13 @@ Unfollow users in example.lst:<br>
 Unfollow people who i follow but they do not follow me back:
 </h4><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python3 twitter-bot.py -o unfollow-back
-"></input><br><br>
-<img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im5.png"><br>
+</code><br><img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im5.png"><br>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 python3 twitter-bot.py -o info
-"></input><br><br>
-<img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im6.png"><br>
+</code><br><img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im6.png"><br>
 <br>
 <br>
 <img src="https://raw.githubusercontent.com/ricardojoserf/twitter-followers-bot/master/images/im7.png"><br>
@@ -136,18 +125,16 @@ python3 twitter-bot.py -o info
 Python 2.x:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 sudo pip install -r requirements.txt
-"></input><br><br>
-<br>
+</code><br>
 <h4>
 Python 3.x:
 </h4>
 <br>
-<input class="form-control input-lg text-center" rows="2" cols="20" style="border: none;" value="
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 sudo pip3 install -r requirements.txt
-"></input><br><br>
-<h4>
+</code><h4>
 Create a twitter account and a twitter app, and fill the <b>config.py</b> file with the data you can create in https://developer.twitter.com
 </h4>
 <br>
