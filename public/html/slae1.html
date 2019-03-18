@@ -26,11 +26,11 @@
 - Port number should be easily configurable<br>
 <br>
 <br>
-<h2> Usage</h2><br>
+<h2>Quick usage</h2><br>
+In this repository there is a .nasm file with a "bind shell" coded in assembly. By default, it binds to the port 8888. However, there is a Python wrapper to generate the shellcode to change the port number easily. The syntax is:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">python wrapper.py $PORT</code>
 <br>
-<br>
-Example with port 7777:<br>
+For example, we could create the shellcode for the port 7777:<br>
 <br>
 <img src="visual/images/slae/1/wrapper/5.png"><br>
 <br>
@@ -38,11 +38,12 @@ Then it can be compiled and executed:<br>
 <br>
 <img src="visual/images/slae/1/wrapper/51.png"><br>
 <br>
-Result:<br>
+The result:<br>
 <br>
 <img src="visual/images/slae/1/wrapper/52.png"><br>
 <br>
-If the port causes problems, a warning message will appear:<br>
+Moreover, if the port causes problems, a warning message will appear:
+<br>
 <br>
 <img src="visual/images/slae/1/wrapper/6.png"><br>
 <br>

@@ -21,23 +21,33 @@
 <br>
 - PoC with using execve-stack as the shellcode to encode with your schema and execute<br>
 <br>
+<h2>Motivation</h2><br>
+The motivation to create custom encoding algorithms is to be able to beat pattern matching and bypass AVs. For this exercise, we start from the "Insertion" and "NOP" encoders from the course, update both ideas and create two new encoding algorithms.
 <br>
-<br>
-<h2> Usage</h2><br>
-<br>
+<br><br>
+<h2>Quick usage</h2><br>
 For this assignment, a Python script has been created which generates the shellcode, updates and compiles the <i>decoder.nasm</i> file and updates and compiles the <i>shellcode.c</i> file, generating the final executable:<br>
-<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">python test.py  && ./shellcode
 </code><br>
-<img src="visual/images/slae/4/1.png"><br>
+<img src="visual/images/slae/4/1.png"><br><br>
+
 <br>
 <br>
-<h2> Custom encoding</h2><br>
+<h3>Encoding 1: Random inserted opcodes</h3>
 <br>
-For this exercise, we start from the "Insertion" and "NOP" encoders from the course, update both ideas and create a single encoding algorithm.<br>
+In this algorithm, there will be fake opcodes inserted between every correct opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run:<br>
+<br>
+<img src="visual/images/slae/4/3.png"><br>
+<br>
+The value to verify the shellcode has finished will be calculated in the Python script, a not used value between the minimum and the maximum of the opcode values of the shellcode. For example, in this case the value is "\xe0".<br>
+<br>
+Furthermore, the correct opcodes will be encoded with a sum operation, adding 1 to the value during the encoding process and substracting 1 during the decoding.<br>
+To verify it is correct, it can be tested using the test script or step by step, as shown in the next picture. The encoder Python script is executed, the output updates the EncodedShellcode variable of decoder.nasm value, and the .nasm file is compiled. Then, the executable can be created after updating the shellcode.c file and compiling it using gcc:<br>
+<br>
+<img src="visual/images/slae/4/4.png"><br>
 <br>
 <br>
-<h3> Idea 1: Opcodes encoding</h3>
+<h3>Encoding 2: Opcodes encoding</h3>
 <br>
 There will be 3 operations to encode every opcode: a ROR operation with the value 1 ("rotating" the bits once towards the "right"), a XOR with <i>0xe0</i> and a substraction with the value 7. <br>
 <br>
@@ -47,16 +57,8 @@ This can be understood better with the next picture:<br>
 <br>
 <img src="visual/images/slae/4/2.png"><br>
 <br>
-<br>
-<h3> Idea 2: Random inserted opcodes</h3>
-<br>
-There will be fake opcodes inserted between every correct opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run. <br>
-<br>
-<img src="visual/images/slae/4/3.png"><br>
-<br>
-The value to verify the shellcode has finished will be calculated in the Python script, a not used value between the minimum and the maximum of the opcode values of the shellcode. For example, in this case the value is "\xe0".<br>
-<br>
-<br>
+To verify it is correct, it can be tested using the test script or step by step, as shown in the next picture. The encoder Python script is executed, the output updates the EncodedShellcode variable of decoder.nasm value, and the .nasm file is compiled. Then, the executable can be created after updating the shellcode.c file and compiling it using gcc:<br>
+<img src="visual/images/slae/4/5.png"><br>
 <br>
 <h2> Note</h2><br>
 <br>

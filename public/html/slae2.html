@@ -26,26 +26,28 @@
 - IP and Port number should be easily configurable<br>
 <br>
 <br>
-<br>
-<h2> Usage</h2>
+<h2>Quick usage</h2><br>
+In this repository there is a .nasm file with a "reverse shell" coded in assembly. By default, it connects to the IP 127.0.0.1 and the port 8888. However, there is a Python wrapper to generate the shellcode to change the IP and port number easily. The syntax is:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">python wrapper.py $IP $PORT
-</code><br>
-
+</code>
+<br>
+For example, we could create the shellcode for the IP 0.0.0.0 and the port 1234:<br>
+<br>
 <img src="visual/images/slae/2/wrapper/2.png"><br>
 <br>
 If there are not input variables, the program asks for them:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/1.png"><br>
 <br>
-Test with port 7777:<br>
+For example, we could create the shellcode for the port 7777 and the IP 0.0.0.0:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/3.png"><br>
 <br>
-Result:<br>
+The result:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/4.png"><br>
 <br>
-If the port causes problems, a warning message will appear:<br>
+Moreover, if the port causes problems, a warning message will appear:
 <br>
 <img src="visual/images/slae/2/wrapper/5.png"><br>
 <br>
