@@ -26,11 +26,11 @@
 <br>
 <h2> What is an EggHunter?</h2><br>
 <br>
-It is a very efficient exploitation method when we have little space to store our shellcode which can be seen as a [Staged Shellcode](https://en.wikipedia.org/wiki/Shellcode#Staged).<br>
+It is a very efficient exploitation method when we have little space to store our shellcode which can be seen as a <a href="https://en.wikipedia.org/wiki/Shellcode#Staged">https://en.wikipedia.org/wiki/Shellcode#Staged</a>.<br>
 <br>
 Summing up, the first part of shellcode will be responsible for searching our 4-byte tag or "egg" in memory and the second part will be stored in some position of the memory, composed of the "egg" and the shellcode to execute (which can be the typical shellcode to spawn a shell, to open a reverse shell...).<br>
 <br>
-Knowing this, the first part is the most important and the one which must be researched carefully. There are many "egghunters" on the internet, but in this case we will focus our study in the ones shown in [the Skape's paper from 2004](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf).<br>
+Knowing this, the first part is the most important and the one which must be researched carefully. There are many "egghunters" on the internet, but in this case we will focus our study in the ones shown in <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">the Skape's paper from 2004</a>.<br>
 <br>
 These egghunters have the three requirements needed: robustness, small size and they are fast. In all of them the author uses 8-byte "eggs", which means that the tag is used twice, so . The technique is based on the system calls, given they can <i>validate process-relative memory addresses without leading to a segmentation fault or other runtime error in the program itself</i>, using them to check if the memory is readable and later if the tag has been reached.<br>
 <br>
@@ -137,7 +137,7 @@ ret();<br>
 <br>
 <h2> Note</h2><br>
 <br>
-This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: https://www.pentesteracademy.com/course?id=3<br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
 <br>
 Student ID: SLAE - 1433<br>
 
