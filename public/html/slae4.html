@@ -22,7 +22,7 @@
 - PoC with using execve-stack as the shellcode to encode with your schema and execute<br>
 <br>
 <h2>Motivation</h2><br>
-The motivation to create custom encoding algorithms is to be able to beat pattern matching and bypass AVs. For this exercise, we start from the "Insertion" and "NOP" encoders from the course, update both ideas and create two new encoding algorithms.
+The motivation to create custom encoding algorithms is to be able to beat pattern matching and bypass AVs. For this exercise, we start from the "Insertion" and "NOT" encoder algorithms from the course, update both ideas and create two new encoding algorithms.
 <br>
 <br><br>
 <h2>Quick usage</h2><br>
@@ -57,11 +57,10 @@ This can be understood better with the next picture:<br>
 <br>
 <img src="visual/images/slae/4/2.png"><br>
 <br>
-To verify it is correct, it can be tested using the test script or step by step, as shown in the next picture. The encoder Python script is executed, the output updates the EncodedShellcode variable of decoder.nasm value, and the .nasm file is compiled. Then, the executable can be created after updating the shellcode.c file and compiling it using gcc:<br>
+To verify it is correct, it can be tested using the test script or step by step, as shown in the next picture. The encoder Python script is executed, the output updates the EncodedShellcode variable of decoder.nasm value, and the .nasm file is compiled. Then, the executable can be created after updating the shellcode.c file and compiling it using gcc:<br><br>
 <img src="visual/images/slae/4/5.png"><br>
-<br>
+<br><br>
 <h2> Note</h2><br>
-<br>
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
 <br>
 Student ID: SLAE - 1433<br>

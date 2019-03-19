@@ -173,6 +173,7 @@ mov ecx, esp<br>
 mov al, 11<br>
 int 0x80<br>
 </code>
+<br><br>
 <h2> Creating the Python wrapper</h2><br>
 Get the shellcode changing the "\" to "\\":<br>
 <br>
@@ -183,7 +184,7 @@ Detect where the port (8888 or 0x22b8 in hexadecimal), the IP and the auxiliar v
 <img src="visual/images/slae/2/3.png"><br>
 <br>
 Now we know the value in the original shellcode which must be substituted. After this, we just must take the input to the wrapper script, translate the port number to hexadecimal (in big endian format) and print the new shellcode with the port updated.<br>
-<br>
+<br><br>
 <h2> Second approach: Ndisasm</h2><br>
 <br>
 A second approach, which can be considered easier, is to get the nasm file from the raw output from msfvenom:<br>
@@ -201,9 +202,8 @@ And it works correctly:<br>
 <img src="visual/images/slae/2/6.png"><br>
 <br>
 This is included in the <b>ndisasm_approach</b> folder, but the wrapper has been developed and tested only for the first approach.<br>
-<br>
+<br><br>
 <h2> Note</h2><br>
-<br>
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
 <br>
 Student ID: SLAE - 1433<br>

