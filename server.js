@@ -124,6 +124,7 @@ app.get('/slae4', function(req, res) { res.sendfile('./public/html/slae4.html');
 app.get('/slae5', function(req, res) { res.sendfile('./public/html/slae5.html'); });
 app.get('/slae6', function(req, res) { res.sendfile('./public/html/slae6.html'); });
 app.get('/slae7', function(req, res) { res.sendfile('./public/html/slae7.html'); });
+app.get('/hall', function(req, res) { res.sendfile('./public/html/hall.html'); });
 
 
 app.get('html/*', function(req, res) {  
