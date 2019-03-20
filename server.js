@@ -127,14 +127,18 @@ app.get('/slae7', function(req, res) { res.sendfile('./public/html/slae7.html');
 app.get('/hall', function(req, res) { res.sendfile('./public/html/hall.html'); });
 
 
+
 app.get('html/*', function(req, res) {  
     res.sendfile('./public/html/dir_particles.html');
 });
 
-app.get('*', function(req, res) {  
+app.get('/', function(req, res) {  
     res.sendfile('./public/html/index.html');
 });
 
+app.get('*', function(req, res) {  
+    res.redirect("/");
+});
 
 app.listen(process.env.PORT || 8080, function() {  
     console.log('Visit... http://localhost:8080');
