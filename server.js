@@ -10,7 +10,7 @@ app.configure(function() {
     app.use(express.methodOverride());                  
 });
 
-
+/*
 app.get("/exec/cmd", function (req, res) {  
     
     var code = req.query['code'];
@@ -116,7 +116,7 @@ app.get("/exec/instoken", function (req, res) {
     });
 
 });
-
+*/
 app.get('/slae1', function(req, res) { res.sendfile('./public/html/slae1.html'); });
 app.get('/slae2', function(req, res) { res.sendfile('./public/html/slae2.html'); });
 app.get('/slae3', function(req, res) { res.sendfile('./public/html/slae3.html'); });
