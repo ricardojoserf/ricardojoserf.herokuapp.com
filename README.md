@@ -11,13 +11,3 @@ Technologies:
 - *AdminLTE* and Bootstrap as CSS frameworks 
 
 - *Heroku* to host the server 
-
-
-
-![Screenshot](images/Screenshot_1.png)
-
-![Screenshot](images/Screenshot_2.png)
-
-
-
-I did it in the summer of 2017. 
