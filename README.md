@@ -1,6 +1,6 @@
-# My personal website
+# My personal blog
 
-URL: https://ricardojruiz.herokuapp.com/
+URL: https://ricardojoserf.herokuapp.com/
 
 Technologies: 
 
@@ -11,6 +11,7 @@ Technologies:
 - *AdminLTE* and Bootstrap as CSS frameworks 
 
 - *Heroku* to host the server 
+
 
 
 ![Screenshot](images/Screenshot_1.png)
