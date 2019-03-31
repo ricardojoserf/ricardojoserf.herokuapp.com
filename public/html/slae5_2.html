@@ -1,0 +1,251 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+
+<h1> Assignment 5: Shellcode functionality</h1><br>
+<br>
+- Take up at leat 3 shellcode samples created using Msfvenom for linux/x86<br>
+<br>
+- Use GDB/Ndisasm/Libemu to dissect the functionality of the shellcode<br>
+<br>
+- Present your analysis<br>
+<br>
+<br>
+<h2>Download from Github</h2><br>
+Link: <a href="https://github.com/ricardojoserf/slae32/tree/master/a5_Shellcode_Functionality">https://github.com/ricardojoserf/slae32/tree/master/a5_Shellcode_Functionality</a>
+<br>
+<br>
+<br>
+<h2> List of payloads</h2><br>
+<br>
+Payloads studied:<br>
+<br>
+- Payload linux/x86/adduser<br>
+<br>
+- Payload linux/x86/read_file<br>
+<br>
+- Payload linux/x86/shell_bind_tcp_random_port<br>
+<br>
+<br>
+<br>
+<br>
+<h2> 5.2 Payload <i>linux/x86/read_file</i></h2>
+<br>
+<h3> Check options</h3>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/read_file --list-options
+</code><br>
+<img src="visual/images/slae/5/read_file/1.png"><br>
+<br>
+<img src="visual/images/slae/5/read_file/2.png"><br>
+<br>
+<br>
+There are 3 basic options:<br>
+<br>
+- FD: The file descriptor to write output to (Required). Default: 1<br>
+- PATH: The file path to read (Required)<br>
+<br>
+<br>
+For this study we will use the basic options:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/read_file FD=1 PATH=/etc/passwd --platform=Linux -a x86 -f c
+</code><br>
+<br>
+<h3> One-liner for getting shellcode </h3>
+<br>
+The fastest way to get the shellcode in my case was using two pipes, one with 'sed' and a second one with 'paste' command:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/read_file --platform=Linux -a x86 -f c FD=1 PATH=/etc/passwd | grep '"' | sed -e 's/\"//g' | paste -sd "" - | tr ";" " "
+</code><br>
+Using it, we get the shellcode we will use for the study of the payload:<br>
+<br>
+<img src="visual/images/slae/5/read_file/3.png"><br>
+<br>
+<br>
+<h3> Libemu</h3>
+<br>
+Libemu does not show any output in this case:<br>
+<br>
+<img src="visual/images/slae/5/read_file/4.png"><br>
+<br>
+When the png picture is generated it is empty.<br>
+<br>
+<h3> Ndisasm</h3>
+<br>
+With ndisasm it is possible to get the .nasm code using:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/read_file --platform=Linux -a x86 -f raw FD=1 PATH=/etc/passwd | ndisasm -u -
+</code><br>
+<br>
+Or a little quicker:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -ne "\xeb\x36\xb8\x05\x00\x00\x00\x5b\x31\xc9\xcd\x80\x89\xc3\xb8\x03\x00\x00\x00\x89\xe7\x89\xf9\xba\x00\x10\x00\x00\xcd\x80\x89\xc2\xb8\x04\x00\x00\x00\xbb\x01\x00\x00\x00\xcd\x80\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xc5\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x00" | ndisasm -u -
+</code><br>
+<br>
+<img src="visual/images/slae/5/read_file/5.png"><br>
+<br>
+Using awk it is possible to get only the part we want and create a .nasm file:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">echo -e "section .text\nglobal _start \n_start:" > 2.nasm
+
+echo -ne "\xeb\x36\xb8\x05\x00\x00\x00\x5b\x31\xc9\xcd\x80\x89\xc3\xb8\x03\x00\x00\x00\x89\xe7\x89\xf9\xba\x00\x10\x00\x00\xcd\x80\x89\xc2\xb8\x04\x00\x00\x00\xbb\x01\x00\x00\x00\xcd\x80\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xc5\xff\xff\xff\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64\x00" | ndisasm -u - | awk '{$2=$2};1' - | cut -d " " -f 3-10 >> 2.nasm
+</code><br>
+<img src="visual/images/slae/5/read_file/6.png"><br>
+<br>
+<br>
+With a little bit of indentation, the nasm file is created and ready to be studied. <br>
+<br>
+<br>
+<h3> Studying the syscalls</h3>
+<br>
+Given we have the nasm code, the first thing to do will be studying the different syscalls. We can do this checking the lines containing "int 0x80" in the code. <br>
+<br>
+In this case we have four syscalls:<br>
+<br>
+<img src="visual/images/slae/5/read_file/7.png"><br>
+<br>
+<br>
+After checking the <i>/usr/include/i386-linux-gnu/asm/unistd_32.h</i> file, the syscalls seem to be:<br>
+<br>
+- Syscall 1 (Value 0x5 or 5 in decimal): open() - <i>It opens the file specified by pathname</i>.<br>
+<br>
+- Syscall 2 (Value 0x3 or 3 in decimal): read() - <i>It attempts  to  read up to count bytes from file descriptor fd into the buffer starting at buf.</i><br>
+<br>
+- Syscall 3 (Value 0x4 or 4 in decimal): write() - <i>It writes up to count bytes from the buffer pointed buf to the file referred to by the file descriptor fd.</i><br>
+<br>
+- Syscall 4 (Value 0x1 or 1 in decimal): exit() - <i>It causes normal process termination and the value of status & 0377 is returned to the parent</i><br>
+<br>
+<br>
+<br>
+<h3> Generating the executable</h3>
+<br>
+Next, the executable gets generated using the <i>shellcode.c</i> script:<br>
+<br>
+<img src="visual/images/slae/5/read_file/8.png"><br>
+<br>
+It is compiled:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gcc -fno-stack-protector -z execstack shellcode.c -o 2
+</code><br>
+An executable named "2" gets generated. It is possible to execute it and check the output:<br>
+<br>
+<img src="visual/images/slae/5/read_file/9.png"><br>
+<br>
+<br>
+Also note that if we study the binary there are interesting strings we can find (this one will appear again later):<br>
+<br>
+<img src="visual/images/slae/5/read_file/10.png"><br>
+<br>
+<br>
+<h3> Study with GDB</h3>
+<br>
+First, the executable is attached in quiet mode:<br>
+<br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">gdb -q 2
+</code>
+<br>Then, we set the disassembly flavor, define the "hook-stop" function, and jump into the "main" function (the one from shellcode.c):<br>
+<br>
+<img src="visual/images/slae/5/read_file/11.png"><br>
+<br>
+Now, we must jump to the shellcode, so we set a breakpoint in the last 'call eax' instruction visible in the previous screenshot (the previous call instructions show the length of the shellcode).<br>
+<br>
+We continue for one instruction using 'stepi' and the 'disassemble' command shows we have reached the shellcode. All the shellcode with the four syscalls can be read:<br>
+<br>
+<img src="visual/images/slae/5/read_file/12.png"><br>
+<br>
+<br>
+<h3> JMP-CALL-POP detected</h3>
+<br>
+In 0x00404040 there is a jump (JMP) to 0x404078 which immediately calls 0x00404042. This is obviously a JMP-CALL-POP so we will read the values after 0x404078, which contain "/etc/passwd"<br>
+<br>
+<img src="visual/images/slae/5/read_file/13.png"><br>
+<br>
+Now, we will set a breakpoint before every syscall: 0x0040404a, 0x0040405c, 0x0040406a and 0x00404076.<br>
+<br>
+<img src="visual/images/slae/5/read_file/14.png"><br>
+<br>
+<br>
+<h3> Syscall 1</h3>
+<br>
+We reach the first syscall:<br>
+<br>
+<img src="visual/images/slae/5/read_file/15.png"><br>
+<br>
+We read the man page of open:<br>
+<br>
+<img src="visual/images/slae/5/read_file/16.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 5 => Syscall is open()<br>
+<br>
+- EBX = 4210813 => The address of "/etc/passwd" string<br>
+<br>
+<img src="visual/images/slae/5/read_file/17.png"><br>
+<br>
+- ECX = 0 => These are the flags values. In this case it is only needed the read permission.<br>
+<br>
+<br>
+<h3> Syscall 2</h3>
+<br>
+We reach the second syscall:<br>
+<br>
+<img src="visual/images/slae/5/read_file/18.png"><br>
+<br>
+We read the man page of read:<br>
+<br>
+<img src="visual/images/slae/5/read_file/19.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 3 => Syscall is read()<br>
+<br>
+- EBX = 3 => File descriptor to use<br>
+<br>
+- ECX = -1073745156 => Contains the value of the file read (the content of the stack)<br>
+<br>
+- EDX = 4096 => 4096 bytes will be read<br>
+<br>
+<br>
+<h3> Syscall 3</h3>
+<br>
+We reach the third syscall:<br>
+<br>
+<img src="visual/images/slae/5/read_file/20.png"><br>
+<br>
+We read the man page of write in here: https://linux.die.net/man/2/write<br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 4 => Syscall is write()<br>
+<br>
+- EBX = 1 => File descriptor is 1 (STDIN)<br>
+<br>
+- ECX = -1073745156 => Address of the characters to write<br>
+<br>
+- EDX = -14 => In the address 0x0040405e, EAX value is copied to EDX because read() on success returns the number of bytes read. In this case, the read() syscall returns -14. <br>
+<br>
+<br>
+<h3> Syscall 4</h3>
+<br>
+We reach the fourth syscall:<br>
+<br>
+<img src="visual/images/slae/5/read_file/21.png"><br>
+<br>
+We read the man page of exit:<br>
+<br>
+<img src="visual/images/slae/5/read_file/22.png"><br>
+<br>
+And then the values are:<br>
+<br>
+- EAX = 1 => Syscall is exit()<br>
+<br>
+- EBX = 0 => Status 0 will represent the program finished correctly in this case.<br>
+<br>
+<h3> Update/correct NASM file</h3>
+<br>
+Now we can update the nasm code deleting the unused opcodes and adding the string we found.<br>
+<br>
+<img src="visual/images/slae/5/read_file/24.png"><br>
+<br>
+Finally we can compile the nasm file and check it works correctly:<br>
+<br>
+<img src="visual/images/slae/5/read_file/25.png"><br>
+<br>
+<br>
+<br>
+<h2> Note</h2><br>
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
+<br>
+Student ID: SLAE - 1433<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>
