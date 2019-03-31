@@ -1,13 +1,15 @@
 # My personal blog
 
-URL: https://ricardojoserf.herokuapp.com/
+Url: https://ricardojoserf.herokuapp.com/
 
 Technologies: 
 
-- *NodeJS* for routing 
+- Routing: *NodeJS* and *Express*
 
-- *AngularJS* ans *ParticleJS* as Javascript frameworks
+- Javascript framework: *AngularJS*
 
-- *AdminLTE* and Bootstrap as CSS frameworks 
+- Index page and background: *ParticleJS*
 
-- *Heroku* to host the server 
+- CSS frameworks : *AdminLTE* and *Bootstrap* 
+
+- Hosting: *Heroku*
