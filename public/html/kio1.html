@@ -1,0 +1,56 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> Kioptrix 1</h1><br>
+First VM in the Kioptrix series. As it states in the Vulnhub page: <br>
+<br>
+These Kioptrix VMs are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways than one to successfully complete the challenges.<br>
+<br>
+<br>
+Vulnhub page: <a href="https://www.vulnhub.com/entry/kioptrix-level-1-1,22/">https://www.vulnhub.com/entry/kioptrix-level-1-1,22/</a><br>
+<br>
+<br>
+<br>
+<h1> Walkthrough</h1><br>
+<h3> Initial nmap scan</h3>
+<br>
+Scanning all ports getting the services versions:<br>
+<br>
+<img src="visual/images/writeups/kio1/1.png"><br>
+<br>
+<h3> SMB scan</h3>
+<br>
+Port 445 does not seem open but 139 does! We check if we can get information using enum4linux. It seems we can, so the "null session attack" is succesful (we could use rpcclient but this tool is faster).<br>
+<br>
+We find information about Samba version: 2.2.1a<br>
+<br>
+<img src="visual/images/writeups/kio1/2.png"><br>
+<br>
+<h3> Check if Samba version is vulnerable</h3>
+<br>
+Well it seems it is...<br>
+<br>
+<img src="visual/images/writeups/kio1/3.png"><br>
+<br>
+<h3> Exploit the vulnerability!</h3>
+<br>
+We can download the 10.c script from exploit.db or we can use the tool "searchsploit" to get the exploit from our Kali machine. At the time of trying this i did not know about searchsploit so i downloaded it. Then it can be compiled with gcc and we get a root shell remotely!<br>
+<br>
+<img src="visual/images/writeups/kio1/4.png"><br>
+<br>
+<br>
+<h2> A second option</h2><br>
+<h3> What does Nikto say?</h3>
+<br>
+Nikto says there is another vulnerability regarding mod_ssl/2.8.4! We can do a buffer overflow and get root!<br>
+<br>
+<img src="visual/images/writeups/kio1/5.png"><br>
+<br>
+<h3> Exploit it </h3>
+<br>
+The exploit has differente options depending on the OS. In this case 0x6a or 0x6b seem very interesting, but only the latter worked in my case:<br>
+<br>
+<img src="visual/images/writeups/kio1/6.png"><br>
+<br>
+<br>
+<br>
+That is it! Easy but not so easy for a beginner like me...<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

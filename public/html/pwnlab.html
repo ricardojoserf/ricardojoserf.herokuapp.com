@@ -1,0 +1,137 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> PwnLab: init</h1><br>
+Vulnhub page: <a href="https://www.vulnhub.com/entry/pwnlab-init,158/">https://www.vulnhub.com/entry/pwnlab-init,158/</a><br>
+<br>
+<h3> Information gathering</h3>
+<br>
+Nmap scan:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/1.png"><br>
+<br>
+Nikto scan:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/2.png"><br>
+<br>
+NSE scripts (nmap using --script auth,vuln):<br>
+<br>
+<img src="visual/images/writeups/pwnlab/3.png"><br>
+<br>
+Directory listing:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/4.png"><br>
+<br>
+<h3> LFI</h3>
+<br>
+Check all the types of LFI from https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20inclusion. One works!<br>
+<br>
+<img src="visual/images/writeups/pwnlab/5.png"><br>
+<br>
+This is it:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/6.png"><br>
+<br>
+Decode the base64-encoded text:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/7.png"><br>
+<br>
+Test if there is a config file:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/8.png"><br>
+<br>
+Decode it again. In this case, an online tool such as https://www.base64decode.org/ works perfectly:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/9.png"><br>
+<br>
+<h3> MySQL </h3>
+<br>
+Connect using the credentials obtained:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/10.png"><br>
+<br>
+Find a table with credentials:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/11.png"><br>
+<br>
+Decode the passwords:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/12.png"><br>
+<br>
+<br>
+<h3> Upload vulnerability</h3>
+<br>
+Check the code in the upload page:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/15.png"><br>
+<br>
+Create a GIF file. It will have:<br>
+<br>
+- The GIF header<br>
+<br>
+- PHP code to execute commands<br>
+<br>
+<br>
+<img src="visual/images/writeups/pwnlab/16.png"><br>
+<br>
+Upload it:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/17.png"><br>
+<br>
+Check it is uploaded:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/18.png"><br>
+<br>
+Access to it:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/19.png"><br>
+<br>
+Use Burp Suite. Set the "cmd" and "lang" values to test it is working:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/20.png"><br>
+<br>
+Check the result:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/21.png"><br>
+<br>
+We will try to create a reverse shell with something similar to this:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/22.png"><br>
+<br>
+Test it:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/23.png"><br>
+<br>
+The reverse shell is created! Check the Kernel version (recon phase):<br>
+<br>
+<img src="visual/images/writeups/pwnlab/24.png"><br>
+<br>
+<h3> Message to Mike! Message to Mike! Message to Mike! </h3>
+<br>
+Locate a suitable exploit:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/25.png"><br>
+<br>
+... but it will not work <i>cries in spanish</i><br>
+<br>
+But wait! There is a weird binary named "msgmike" in kane's home directory. It tries to open "msg.txt" using <i>cat msg.txt</i>. But what if we change the "cat" binary file? We could create a reverse shell (too much sufferance aint it? ;)) or, in this case, open a shell. <br>
+<br>
+We change the PATH variable value: it will search the binaries first in this folder, and then in the typical ones. So, a "fake cat" is created, we give it the execution permissions (777 is probably too much...) and we run the "weird" binary:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/26.png"><br>
+<br>
+Hey! We are Mike!<br>
+<br>
+<h3> Message to root!  </h3>
+<br>
+Mike's home folder has a new... weird binary. Let us check that it does:<br>
+<br>
+<img src="visual/images/writeups/pwnlab/27.png"><br>
+<br>
+Weell it executes any command as root, so let us just open a new shell... and we are root!<br>
+<br>
+<img src="visual/images/writeups/pwnlab/28.png"><br>
+<br>
+<i>Exit</i> x4<br>
+<br>
+<img src="visual/images/writeups/pwnlab/29.png"><br>
+<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

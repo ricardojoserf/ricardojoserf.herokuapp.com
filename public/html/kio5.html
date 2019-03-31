@@ -1,0 +1,124 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> Kioptrix: 2014 (5)</h1><br>
+Vulnhub page: <a href="https://www.vulnhub.com/entry/kioptrix-2014-5,62/">https://www.vulnhub.com/entry/kioptrix-2014-5,62/</a><br>
+<br>
+<h3> Information gathering</h3>
+<br>
+Nmap scan:<br>
+<br>
+<img src="visual/images/writeups/kio5/1.png"><br>
+<br>
+Nikto scan shows mod_ssl vulnerability:<br>
+<br>
+<img src="visual/images/writeups/kio5/2.png"><br>
+<br>
+<h3> Locate vulnerability</h3>
+<br>
+Use searchsploit to locate the vulnerability:<br>
+<br>
+<img src="visual/images/writeups/kio5/3.png"><br>
+<br>
+<h3> Compilation</h3>
+<br>
+Compile the OpenFuck exploit:<br>
+<br>
+<img src="visual/images/writeups/kio5/4.png"><br>
+<br>
+<br>
+It seems unsuccessful:<br>
+<br>
+<img src="visual/images/writeups/kio5/8.png"><br>
+<br>
+<br>
+<h3> Website in port 8080</h3>
+<br>
+It is not accesible:<br>
+<br>
+<img src="visual/images/writeups/kio5/6.png"><br>
+<br>
+<h3> Website in port 80</h3>
+<br>
+It is a default page:<br>
+<br>
+<img src="visual/images/writeups/kio5/5.png"><br>
+<br>
+<br>
+But with curl:<br>
+<br>
+<img src="visual/images/writeups/kio5/9.png"><br>
+<br>
+<br>
+There is a vulnerability related to pchart:<br>
+<br>
+<img src="visual/images/writeups/kio5/10.png"><br>
+<br>
+<h3> Directory traversal - Recon phase</h3>
+<br>
+<img src="visual/images/writeups/kio5/13.png"><br>
+<br>
+<br>
+<img src="visual/images/writeups/kio5/14.png"><br>
+<br>
+<br>
+<img src="visual/images/writeups/kio5/15.png"><br>
+<br>
+<br>
+<img src="visual/images/writeups/kio5/16.png"><br>
+<br>
+<br>
+<img src="visual/images/writeups/kio5/17.png"><br>
+<br>
+<br>
+<h3> Locate the correct User Agent</h3>
+<br>
+Read http.conf:<br>
+<br>
+<img src="visual/images/writeups/kio5/18.png"><br>
+<br>
+Access using curl again:<br>
+<br>
+<img src="visual/images/writeups/kio5/19.png"><br>
+<br>
+<br>
+<h3> Locate a second phptax exploit:</h3>
+<br>
+This allows remote code execution:<br>
+<br>
+<img src="visual/images/writeups/kio5/20.png"><br>
+<br>
+Read the exploit:<br>
+<br>
+<img src="visual/images/writeups/kio5/21.png"><br>
+<br>
+There is also a Metasploit module:<br>
+<br>
+<img src="visual/images/writeups/kio5/22.png"><br>
+<br>
+<h3> Metasploit module</h3>
+<br>
+Set the parameters and run it:<br>
+<br>
+<img src="visual/images/writeups/kio5/23.png"><br>
+<br>
+<h3> Locate if there is a Kernel or OS exploit</h3>
+<br>
+<img src="visual/images/writeups/kio5/24.png"><br>
+<br>
+<h3> Upload and compile the exploit</h3>
+<br>
+<img src="visual/images/writeups/kio5/25.png"><br>
+<br>
+<br>
+Check it is downloaded from our host:<br>
+<br>
+<img src="visual/images/writeups/kio5/26.png"><br>
+<br>
+<h3> Get root!</h3>
+<br>
+<img src="visual/images/writeups/kio5/27.png"><br>
+<br>
+There are more possibilities:<br>
+<br>
+<img src="visual/images/writeups/kio5/28.png"><br>
+<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

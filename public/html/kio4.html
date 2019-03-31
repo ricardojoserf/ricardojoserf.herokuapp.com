@@ -1,0 +1,89 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> Kioptrix: Level 1.3 (4)</h1><br>
+Vulnhub page: <a href="https://www.vulnhub.com/entry/kioptrix-level-13-4,25/">https://www.vulnhub.com/entry/kioptrix-level-13-4,25/</a><br>
+<br>
+<h3> Information gathering</h3>
+<br>
+Nmap scan:<br>
+<br>
+<img src="visual/images/writeups/kio4/1.png"><br>
+<br>
+Enum4linux scan:<br>
+<br>
+<img src="visual/images/writeups/kio4/2.png"><br>
+<br>
+<img src="visual/images/writeups/kio4/3.png"><br>
+<br>
+<img src="visual/images/writeups/kio4/4.png"><br>
+<br>
+Nikto scan:<br>
+<br>
+<img src="visual/images/writeups/kio4/6.png"><br>
+<br>
+<img src="visual/images/writeups/kio4/7.png"><br>
+<br>
+<br>
+Directory listing (using dirsearch. Gobuster is cool too)<br>
+<br>
+<img src="visual/images/writeups/kio4/5.png"><br>
+<br>
+<br>
+<h3> Website recon</h3>
+<br>
+Access the /member route. Test the different users found using Enum4linux:<br>
+<br>
+<img src="visual/images/writeups/kio4/9.png"><br>
+<br>
+<img src="visual/images/writeups/kio4/10.png"><br>
+<br>
+Check there is a XSS vulnerability too:<br>
+<br>
+<img src="visual/images/writeups/kio4/11.png"><br>
+<br>
+<h3> SSH connection</h3>
+<br>
+The shell is weird! It closes the connection after 2 commands...<br>
+<br>
+<img src="visual/images/writeups/kio4/12.png"><br>
+<br>
+Well but it seems that it is possible to enumerate directories and files! At least the first one hehe...<br>
+<br>
+<img src="visual/images/writeups/kio4/13.png"><br>
+<br>
+Let us keep trying...<br>
+<br>
+<img src="visual/images/writeups/kio4/14.png"><br>
+<br>
+The "forbidden path" is suspicious... Google says it could be lshell. Let us check!<br>
+<br>
+<img src="visual/images/writeups/kio4/15.png"><br>
+<br>
+The .conf file exists... let us say it is proven that they are using it<br>
+<br>
+<h3> Lshell exploit</h3>
+<br>
+We get a reverse shell:<br>
+<br>
+<img src="visual/images/writeups/kio4/16.png"><br>
+<br>
+<h3> Escaping lshell</h3>
+<br>
+Explanation from Stackoverflow:<br>
+<br>
+<img src="visual/images/writeups/kio4/18.png"><br>
+<br>
+Escape:<br>
+<br>
+<img src="visual/images/writeups/kio4/17.png"><br>
+<br>
+Get Mysql credentials:<br>
+<br>
+<img src="visual/images/writeups/kio4/19.png"><br>
+<br>
+<h3> Mysql Exploit. RoOt!</h3>
+<br>
+Add the UID flag in bash binary as root user (from MySQL) and run it as John. You are root: <br>
+<br>
+<img src="visual/images/writeups/kio4/20.png"><br>
+<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

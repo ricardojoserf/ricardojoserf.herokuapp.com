@@ -1,29 +1,21 @@
-<br><br><br>
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
 
-<div id="particles-js-background" class="container" ng-controller="mainController"> </div>
-
-<div id="overlay" class="container" ng-controller="mainController"> 
-    <div class="text-center titulo">
-        <h1>Fingerprinting data in this browser</h1>
-    </div>
-    <br><br><br>
-
-    <div class="row">
-
-    	<div id="fingerprintingTable" class="col-sm-8 col-sm-offset-2 text-center">
+        <h1>Fingerprinting data in this browser</h1><br><br><br>
             <form>
-        		<h3>Canvas print:</h3>
-        		<br>
-                <div class="form-group" style="overflow:hidden;">
-                    <textarea rows="8" id="canvasprint" type="text" class="form-control input-lg"></textarea>
-                </div>
-                <br><br>
-                <h3>Fingerprinting values:</h3>
+                <h3>Fingerprinting values</h3>
+                <br>
+    			<div id="fingerprintingTable"></div>
   				<br>
-            </form>
-        </div>
+        		<h3>Canvas print</h3>
+        		<br>
+                <div> 
+                   
+                    <p id="canvasprint" style="background-color:white; word-wrap: break-word; border-style: ridge;"></p>
 
-    </div>
+                </div>
+                <br>
+            </form>
+
     
 	
 	<script>
@@ -41,20 +33,16 @@
 				client.getBrowser(),
 				client.getBrowserVersion(),
 				client.getBrowserMajorVersion(),
-				
-
 				client.getScreenPrint(),
 				client.getPlugins(),
 				client.getFonts(),
 				client.isLocalStorage(),
 				client.isSessionStorage(),
-				//client.getCanvasPrint(),
 				client.getCPU(),
 				client.isMobile(),
 				client.isIphone(),
 				client.isIpad(),
 				client.isIpod(),
-
 				client.isIE(),
 				client.isChrome(),
 				client.isFirefox(),
@@ -72,14 +60,12 @@
 				client.getDevice(),
 				client.getDeviceType(),
 				client.getDeviceVendor(),
-
 				client.isMobileMajor(),
 				client.isMobileAndroid(),
 				client.isMobileOpera(),
 				client.isMobileWindows(),
 				client.isMobileBlackBerry(),
 				client.isMobileIOS(),
-
 				client.getColorDepth(),
 				client.getCurrentResolution(),
 				client.getAvailableResolution(),
@@ -94,7 +80,6 @@
 				client.getMimeTypes(),
 				client.isMimeTypes(),
 				client.isFont(),
-
 				client.isCookie(),
 				client.getTimeZone(),
 				client.getLanguage(),
@@ -110,8 +95,6 @@
 				"client.getBrowser()",
 				"client.getBrowserVersion()",
 				"client.getBrowserMajorVersion()",
-				
-
 				"client.getScreenPrint()",
 				"client.getPlugins()",
 				"client.getFonts()",
@@ -139,14 +122,12 @@
 				"client.getDevice()",
 				"client.getDeviceType()",
 				"client.getDeviceVendor()",
-
 				"client.isMobileMajor()",
 				"client.isMobileAndroid()",
 				"client.isMobileOpera()",
 				"client.isMobileWindows()",
 				"client.isMobileBlackBerry()",
 				"client.isMobileIOS()",
-
 				"client.getColorDepth()",
 				"client.getCurrentResolution()",
 				"client.getAvailableResolution()",
@@ -161,14 +142,12 @@
 				"client.getMimeTypes()",
 				"client.isMimeTypes()",
 				"client.isFont()",
-
 				"client.isCookie()",
 				"client.getTimeZone()",
 				"client.getLanguage()",
 				"client.getSystemLanguage()",
 				"client.isCanvas()",
 				"client.getBrowserData()"
-
 			]
 
 
@@ -189,7 +168,7 @@
 
 		   	var td2 = tr.insertCell();
             td2.appendChild(document.createTextNode("VALUE"));
-            td2.setAttribute("style", "font-size: 140%");
+            td2.setAttribute("style", "text-align:center; font-size: 140%");
             td2.style.border = '1px solid black';
             td2.setAttribute('rowSpan', '1');
 
@@ -242,7 +221,7 @@
 
 							var td2 = tr.insertCell();	
 							td2.appendChild(document.createTextNode(val));
-			                td2.setAttribute("style", "font-size: 125%");
+			                td2.setAttribute("style", "text-align:center; font-size: 125%");
 			                td2.style.border = '1px solid black';
 			                td2.setAttribute('rowSpan', '1');	    						
 						}
@@ -269,7 +248,7 @@
 					   		value = "No value";
 					   	}
 		                td2.appendChild(document.createTextNode(value));
-		                td2.setAttribute("style", "font-size: 125%");
+        		        td2.setAttribute("style", "text-align:center; font-size: 125%");
 		                td2.style.border = '1px solid black';
 		                td2.setAttribute('rowSpan', '1');	
 	
@@ -280,10 +259,5 @@
 			document.getElementById("fingerprintingTable").appendChild(tbl);
 			
 		</script>
-    </div>
 </div>
-
-<br><br>
-
-<script src="visual/particles/particles.js"></script>
-<script src="visual/particles/particles_style_2.js"></script>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

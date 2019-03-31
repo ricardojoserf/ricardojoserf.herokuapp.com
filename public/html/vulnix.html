@@ -1,0 +1,98 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> HackLAB: Vulnix</h1><br>
+Vulnhub: <a href="https://www.vulnhub.com/entry/hacklab-vulnix,48/">https://www.vulnhub.com/entry/hacklab-vulnix,48/</a><br>
+<br>
+<h3> Information gathering</h3>
+<br>
+Nmap scan. OS detection:<br>
+<br>
+<img src="visual/images/writeups/vulnix/1.png"><br>
+<br>
+Using the NSE scripts:<br>
+<br>
+<img src="visual/images/writeups/vulnix/2.png"><br>
+<br>
+Enumerating SMTP users:<br>
+<br>
+<img src="visual/images/writeups/vulnix/3.png"><br>
+<br>
+<img src="visual/images/writeups/vulnix/4.png"><br>
+<br>
+Checking some SMTP users (ricardo does not exist, lp exists):<br>
+<br>
+<img src="visual/images/writeups/vulnix/5.png"><br>
+<br>
+<h3> NTFS share </h3>
+<br>
+Detect it:<br>
+<br>
+<img src="visual/images/writeups/vulnix/6.png"><br>
+<br>
+Check permissions (why can not i access!!!):<br>
+<br>
+<img src="visual/images/writeups/vulnix/7.png"><br>
+<br>
+A futile, futile test:<br>
+<br>
+<img src="visual/images/writeups/vulnix/8.png"><br>
+<br>
+A second futile, futile test:<br>
+<br>
+<img src="visual/images/writeups/vulnix/9.png"><br>
+<br>
+Nope, not working... This is not the way, indeed!<br>
+<br>
+<img src="visual/images/writeups/vulnix/12.png"><br>
+<br>
+<img src="visual/images/writeups/vulnix/13.png"><br>
+<br>
+<h3> NFSpy</h3>
+<br>
+Test if it can be mounted using NFSpy:<br>
+<br>
+<img src="visual/images/writeups/vulnix/14.png"><br>
+<br>
+Now, do it without using the "ro" (read-only) option... xD<br>
+<br>
+<img src="visual/images/writeups/vulnix/16.png"><br>
+<br>
+Create a .ssh folder and add your SSH key:<br>
+<br>
+<img src="visual/images/writeups/vulnix/17.png"><br>
+<br>
+<h3> SSH connection</h3>
+<br>
+Now you can connect the system using your SSH key:<br>
+<br>
+<img src="visual/images/writeups/vulnix/18.png"><br>
+<br>
+<br>
+Check what you can execute as superuser:<br>
+<br>
+<img src="visual/images/writeups/vulnix/21.png"><br>
+<br>
+Execute it! Change the "root_squash" to "no_root_squash"<br>
+<br>
+<img src="visual/images/writeups/vulnix/26.png"><br>
+<br>
+<img src="visual/images/writeups/vulnix/27.png"><br>
+<br>
+<h3> Privilege escalation</h3>
+<br>
+With "no_root_squash" we can mount the share and change permissions as the root user. Let us create a "bash" binary with the UID flag! But first let us test it with a file named "a":<br>
+<br>
+<img src="visual/images/writeups/vulnix/33.png"><br>
+<br>
+In the server it seems to be owned by root. Let us try to the same with bash now. Copy the binary:<br>
+<br>
+<img src="visual/images/writeups/vulnix/35.png"><br>
+<br>
+Change owner and permissions:<br>
+<br>
+<img src="visual/images/writeups/vulnix/36.png"><br>
+<br>
+<h3> Get root</h3>
+<br>
+<img src="visual/images/writeups/vulnix/36.png"><br>
+<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>

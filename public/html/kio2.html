@@ -1,0 +1,38 @@
+<br><div id="particles-js-background" class="container" ng-controller="mainController"> </div><div id="overlay" class="container" ng-controller="mainController"><br><br>
+<h1> Kioptrix: Level 1.1</h1><br>
+Vulnhub page: <a href="https://www.vulnhub.com/entry/kioptrix-level-11-2,23/">https://www.vulnhub.com/entry/kioptrix-level-11-2,23/</a><br>
+<br>
+<h3> Information gathering</h3><br>
+Nmap scan:<br>
+<br>
+<img src="visual/images/writeups/kio2/1.png"><br>
+<br>
+<h3> SQL injection</h3><br>
+Website in port 80 shows a login page. It can be bypassed with a quite basic sql injection:<br>
+<br>
+<img src="visual/images/writeups/kio2/2.png"><br>
+<br>
+<h3> Code execution</h3><br>
+Ping pages in these machines usually have this problem. In this case it is possible to create a reverse shell: locate what is the Netcat binary ("which nc") and run simething similar to:<br>
+<br>
+<img src="visual/images/writeups/kio2/3.png"><br>
+<br>
+<h3> Reverse shell</h3><br>
+Open a listener. Start the recon phase: the Linux Kernel seems vulnerable:<br>
+<br>
+<img src="visual/images/writeups/kio2/4.png"><br>
+<br>
+<h3> Locate a exploit</h3><br>
+Find a exploit. This seems promising: https://www.exploit-db.com/exploits/9542<br>
+<br>
+<img src="visual/images/writeups/kio2/6.png"><br>
+<br>
+<h3> Upload it</h3><br>
+Create a Python server and upload it:<br>
+<br>
+<img src="visual/images/writeups/kio2/5.png"><br>
+<br>
+<h3> Compile, run, root!</h3><br>
+<img src="visual/images/writeups/kio2/7.png"><br>
+<br>
+<br><br><br><br><script src="visual/particles/particles.js"></script><script src="visual/particles/particles_style_2.js"></script>
