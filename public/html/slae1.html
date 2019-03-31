@@ -41,15 +41,15 @@ Moreover, if the port causes problems, a warning message will appear:
 <br>
 <h2> First approach: Libemu</h2><br>
 <br>
-After installing Libemu, we will use the <i>sctest</i> binary. We can get the result using the binary directly or the <i>libemu.sh</i> script (in <b>scripts/</b> folder):<br>
+After installing Libemu, we will use the <i>sctest</i> binary. We can get the result using the binary directly or the <i>libemu.sh</i> script (in "scripts/" folder):<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_bind_tcp --platform=Linux -a x86 -f raw LPORT=8888 | ./sctest -vvv -Ss 10000 -G bindshell.dot
 </code><br>
-Or we can use the libemu.sh script (in scripts/ folder):<br>
+Or we can use the libemu.sh script (in "scripts/" folder):<br>
 <br>
-</code>sh libemu.sh "msfvenom -p linux/x86/shell_bind_tcp --platform=Linux -a x86 -f raw LPORT=8888" bindshell | tee libemu_res/libemu_res.txt
+<code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh libemu.sh "msfvenom -p linux/x86/shell_bind_tcp --platform=Linux -a x86 -f raw LPORT=8888" bindshell | tee libemu_res/libemu_res.txt
 </code><br>
 <br>
-The result:
+The result:<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">int socket (<br>
 int domain = 2;<br>
 int type = 1;<br>
@@ -160,7 +160,7 @@ Once we know the system calls or syscalls, the values used in them and the order
 
 printf "%x\n" 363
 </code><br>
-Or the <i>syscallhex.sh</i> script (in <b>scripts/</b> folder)<br>
+Or the <i>syscallhex.sh</i> script (in "scripts/" folder)<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh syscallhex.sh listen
 </code><br>
 <br>
@@ -179,7 +179,7 @@ The system calls and their values are:<br>
 - Execve:   11 (0xb)<br>
 <br>
 <br>
-Also it is important to know how the system calls work in Linux. As stated in the [Skape's paper about egghunters](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf) "the system call interface that is exposed to user-mode applications in Linux (on IA32) is provided through soft-interrupt 0x80. The following table describes the register layout that is used across all system calls"<br>
+Also it is important to know how the system calls work in Linux. As stated in the <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">Skape's paper about egghunters</a>  <i>"the system call interface that is exposed to user-mode applications in Linux (on IA32) is provided through soft-interrupt 0x80. The following table describes the register layout that is used across all system calls"</i><br>
 <br>
 <img src="visual/images/slae/1/7.png"><br>
 <br>
@@ -282,7 +282,7 @@ And it works correctly:<br>
 <br>
 <img src="visual/images/slae/1/wrapper/10.png"><br>
 <br>
-This is included in the <b>ndisasm_approach</b> folder, but the wrapper has been developed and tested only for the first approach.<br>
+This is included in the "ndisasm_approach/" folder, but the wrapper has been developed and tested only for the first approach.<br>
 <br><br>
 <h2> Note</h2><br>
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>

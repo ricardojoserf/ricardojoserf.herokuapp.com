@@ -37,7 +37,7 @@ The result:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/4.png"><br>
 <br>
-Moreover, if the port causes problems, a warning message will appear:
+Moreover, if the port causes problems, a warning message will appear:<br>
 <br>
 <img src="visual/images/slae/2/wrapper/5.png"><br>
 <br>
@@ -47,7 +47,7 @@ After installing Libemu, we will use the sctest binary. We can get the result us
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1 | ./sctest -vvv -Ss 10000 -G reverseshell.dot
 </code>
 <br>
-Or we can use the libemu.sh script (in scripts/ folder):<br>
+Or we can use the libemu.sh script (in "scripts/" folder):<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh libemu.sh "msfvenom -p linux/x86/shell_reverse_tcp --platform=Linux -a x86 -f raw LPORT=8888 LHOST=127.0.0.1" reverseshell | tee libemu_res/libemu_res.txt
 </code>
 <br>
@@ -101,7 +101,7 @@ Once we know the system calls or syscalls, the values used in them and the order
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep listen <br>
 printf "%x\n" 363 <br>
 </code><br>
-Or the syscallhex.sh script (in scripts/ folder)<br>
+Or the syscallhex.sh script (in "scripts/" folder)<br>
 <br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">sh syscallhex.sh listen
 </code><br>
 The system calls and their values are:<br>
@@ -191,7 +191,7 @@ And it works correctly:<br>
 <br>
 <img src="visual/images/slae/2/6.png"><br>
 <br>
-This is included in the <b>ndisasm_approach</b> folder, but the wrapper has been developed and tested only for the first approach.<br>
+This is included in the "ndisasm_approach/" folder, but the wrapper has been developed and tested only for the first approach.<br>
 <br><br>
 <h2> Note</h2><br>
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification: <a href="https://www.pentesteracademy.com/course?id=3">https://www.pentesteracademy.com/course?id=3</a><br>
